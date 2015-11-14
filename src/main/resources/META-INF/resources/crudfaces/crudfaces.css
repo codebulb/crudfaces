@@ -1,0 +1,182 @@
+/*
+ * Copyright 2015 CrudFaces.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+/*** CrudFaces components ***/
+/*** ==================== ***/
+
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-cell,
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-cell > .cf-formlayout-componentcell,
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-cell > .cf-formlayout-messagecell,
+.form-horizontal.cf-formlayout .cf-formlayout-buttonbar {
+    padding-left: 0px;
+}
+
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.form-horizontal.cf-formlayout > .cf-formlayout-row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.form-horizontal.cf-formlayout > .cf-formlayout-buttonbar > :first-child {
+    margin-left: 0px;
+}
+
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-outputtext {
+    /* align with .control-label cells */
+    padding-top: 7px;
+}
+
+.cf-formlayout-messagecell > .alert {
+    /* match "form-control" height */
+    padding: 6px;
+}
+
+.cf-formlayout-messagecell {
+    /* because there is already margin-right on the parent cell */
+    padding-right: 0px;
+}
+
+/*** Bootstrap fixes ***/
+/*** =============== ***/
+.btn {
+    margin: 4px;
+}
+
+.alert {
+    /* FIXME Why must this be "!important"? */
+    margin-bottom: 0px !important;
+    padding: auto;
+}
+
+.table {
+    margin-bottom: 0px;
+}
+
+.ui-datatable {
+    margin-bottom: 20px;
+}
+
+/* copied from original .paginator... selector
+   because we cannot adhere to its exact child element specification with PrimeFaces */
+.pagination {
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0px 0;
+    padding-left: 0;
+  text-align: center;
+}
+.pagination > * {
+    display: inline-block;
+}
+.pagination > * > * {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #337ab7;
+    float: left;
+    line-height: 1.42857;
+    margin-left: -1px;
+    padding: 6px 12px;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+}
+.pagination > :first-child > * {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    margin-left: 0;
+}
+.pagination > :last-child > * {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.pagination > * > :focus, .pagination > * > :hover {
+    background-color: #eee;
+    border-color: #ddd;
+    color: #23527c;
+    z-index: 3;
+}
+.pagination > * > .active {
+    background-color: #337ab7;
+    border-color: #337ab7;
+    color: #fff;
+    cursor: default;
+    z-index: 2;
+}
+.pagination > * > :disabled {
+    background-color: #fff;
+    border-color: #ddd;
+    color: #777;
+    cursor: not-allowed;
+}
+
+.cf-pagination-bottom {
+    margin-top: 4px;
+}
+
+.ui-datatable {
+    text-align: center;
+}
+
+.ui-datatable-tablewrapper {
+    text-align: initial;
+}
+
+.form-control-static {
+    min-height: inherit;
+    padding-top: 0px;
+}
+
+/*** PrimeFaces fixes ***/
+/*** ================ ***/
+.ui-datatable .ui-datatable-header {
+    padding: 4px;
+    text-align: left;
+}
+
+.ui-datatable .ui-datatable-footer {
+    padding: 4px;
+    text-align: right;
+}
+
+.ui-chkbox-box, .ui-radiobutton-box {
+    border: 1px solid #a8a8a8;
+}
+
+.ui-icon {
+    height: 16px;
+    width: 16px;
+}
+
+.ui-row-editor.btn {
+    text-align: inherit;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.ui-state-disabled {
+    /* override PrimeFaces !important setting */
+    cursor: not-allowed !important;
+}
+
+/*** Font Awesome fixes ***/
+/*** ================== ***/
+.fa.fa-circle.ui-radiobutton-box {
+    margin-top: 10px;
+    border-top-width: 0px;
+}

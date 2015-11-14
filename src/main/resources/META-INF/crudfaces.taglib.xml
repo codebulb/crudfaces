@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright 2015 CrudFaces.
+
+   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+   the License. You may obtain a copy of the License at
+
+	   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+-->
+<facelet-taglib id="cf"
+                xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd"
+                version="2.2"
+>
+    <description>CrudFaces UI components.</description>
+    <namespace>http://crudfaces.codebulb.ch</namespace>
+    <short-name>cf</short-name>
+	
+    <tag>
+        <description>
+			<![CDATA[
+				<p>
+A container component to apply implicitly "form-like" (e.g. label / input /
+message) grid styling of its child components using a (responsive) CSS layout
+with out-of-the-box support for Bootstrap responsive form grid CSS classes.
+</p>
+<p>
+Modern interface stying is based on CSS, not HTML tables, because it embraces
+separation of design and functionality, and it enables sophisticated
+techniques such as responsive, mobile-friendly layouts. </p>
+<p>
+However, none of today's available JSF (component) frameworks deliver an
+easy-to-use abstraction for styling components using these techniques. The
+built-in containers for JSF and PrimeFaces, e.g.
+<code>&lt;panelGrid&gt;</code>, are based on HTML tables. PrimeFaces provides
+<a href="http://www.primefaces.org/showcase/ui/panel/grid.xhtml">
+an additional set of CSS grid classes</a>, but they don't seem to actually
+work responsively at all; also, they need to be applied explicitly.</p>
+<p>
+This is especially annoying as most JSF web applications typically make heavy
+use of quite simple grid-like form layouts, but using
+<code>&lt;panelGrid&gt;</code> or applying HTML tables / CSS explicitly is
+cumbersome and diminishes XHTML readability, especially when trying to align
+components in a certain way or when using "colspan" attributes. What we
+really want is a panelGrid, but which works with CSS classes and is built
+with responsiveness out-of-the box. This is what
+<code>&lt;cf:formLayout&gt;</code> provides.</p>
+<p>
+A <a href="http://www.bootsfaces.net/layout/panelgrids.jsf">similar component
+is also included in the BootsFaces library</a>, but it seems far more basic
+and doesn't come as real-world production-ready as
+ <code>&lt;cf:formLayout&gt;</code>.</p>
+<p>
+<code>&lt;cf:formLayout&gt;</code> implicitly applies the required CSS
+classes to its child components to build a simple form-like grid layout for a
+flexible amount of columns (default 2). It is preconfigured to use
+Bootstrap's form-horizontal styling CSS classes with its base 12 grid
+system.</p>
+<p>
+<code>&lt;cf:formLayout&gt;</code> also includes the following features:</p>
+<ul>
+<li><code>&lt;message&gt;</code>s are combined with their respective input
+component into one cell. This is typically desired because otherwise,
+non-present messages (which still render an empty cell) would create huge
+gaps in the UI.</li>
+<li>Buttons are by default put in a "button bar" at the bottom of the layout.
+If you want a particular button to stay inline, add the
+<code>a:inline="true"</code> HTML5 pass-through attribute to it. If on the
+other hand you want a non-button component to be placed in the "button bar",
+use the <code>a:buttonBar="true"</code> pass-through attribute.</li>
+</ul>
+<p>
+Note that <code>&lt;cf:formLayout&gt;</code> does not implement an actual
+HTML <code>&lt;form&gt;</code>, it's really just for layouting purposes which
+leaves you the free choice of how to integrate it in an actual HTML form.</p>
+<h2>Known restrictions</h2>
+<ul>
+<li>Nesting <code>&lt;cf:formLayout&gt;</code>s is not supported.</li>
+<li>Support for custom styling is very limited; explicitly override the
+default styles is not supported.</li>
+</ul>
+<p>
+These restrictions are most likely to be addressed and resolved in future
+CrudFaces versions.</p>
+			]]>
+        </description>
+        <tag-name>formLayout</tag-name>
+        <component>
+            <component-type>ch.codebulb.crudfaces.component.FormLayout</component-type>
+        </component>
+        <attribute>
+            <description>
+				<![CDATA[
+					<p>The number of groups per row. <i>Defaults to <code>1</code>.</i></p>
+					<p>Components are organized in groups, and groups are aligned in rows. This matches Bootstrap's grid system which requires
+					components to be combined in <code>form-group</code>s for use with validation styling. Use <code>groupRatios</code> to control the number of components per group.</p>
+				]]>
+            </description>
+            <name>groups</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <description>
+				<![CDATA[
+					<p>The aspect ratio of the components in one group, separated by a whitespace character. <i>Defaults to <code>"4 8"</code>.</i></p>
+					<p>Components are organized in groups. Typically, a group consists of a label,
+					an input component and optional helper components such as a help button. The number of individual numbers in <code>groupRatios</code> determines the number of components per group;
+					their respective aspect ratio determines their actual aspect ratio whereby the total number should match the container's max aspect ratio. For a Bootstrap container, this is <code>12</code>.</p>
+				]]>
+            </description>
+            <name>groupRatios</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+				<![CDATA[
+					<p>The component style class. <i>Defaults to <code>null</code>.</i></p>
+					<p>If present, this style class is added to the outermost container's <code>class</code> attribute.</p>
+				]]>
+            </description>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <description>
+				<![CDATA[
+					<p>The component inline style. <i>Defaults to <code>null</code>.</i></p>
+					<p>If present, this style is added to the outermost container's <code>style</code> attribute.</p>
+				]]>
+            </description>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+			<![CDATA[
+				<p>
+A componenthandler tag which turns all (deep) nested input components into
+&lt;h:outputText&gt; components, thus rendering the "read only" equivalent.
+</p>
+<p>
+Although vanilla JSF provides the <code>disabled</code> attribute for every
+component, this attribute still renders the component in question as true
+input component, but grays it out such that the user cannot manipulate it.
+However, this does not cover the typical use-case of providing both a "write"
+and a "read" mode for a component or even an entire view as this view is
+expected to be presented as a true plain HTML output text. This is what is
+achieved by using the
+<code>&lt;cf:readOnly&gt;</code> tag.</p>
+<p>
+This component is realized as a simple JSF component, but with the special
+<code>ReadOnly</code> componenthandler attached which executes the actual
+transformation. Because the <code>id</code> attribute is kept if explicitly
+set for the original input component, it can still be targetted by e.g. an
+<code>&lt;outputLabel&gt;</code>, a
+<code>&lt;message&gt;</code>, or a <code>&lt;p:focus&gt;</code> component,
+hence preventing "target not found" errors.</p>
+<h2>Usage</h2>
+<p>
+Using the tag is somewhat similar to OmniFaces'
+<code>&lt;o:massAttribute&gt;</code> tag: Just surround the component(s) in
+question with the tag. Of course, you can switch between input and output
+rendering conditionally using the component's <code>disabled</code>
+attribute.</p>
+
+<h2>Known restrictions</h2>
+<ul>
+<li>Only simple text input PrimeFaces components are supported.</li>
+</ul>
+<p>
+These restrictions are most likely to be addressed and resolved in future
+CrudFaces versions.</p>
+			]]>
+        </description>
+        <tag-name>readOnly</tag-name>
+        <component>
+            <component-type>ch.codebulb.crudfaces.component.ReadOnly</component-type>
+            <handler-class>ch.codebulb.crudfaces.componenthandler.ReadOnly</handler-class>
+        </component>
+        <attribute>
+            <description>
+				<![CDATA[
+					<p><code>true</code> to disable the functionality. <i>Defaults to <code>false</code>.</i></p>
+				]]>
+            </description>
+            <name>disabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+    </tag>
+	
+</facelet-taglib>
