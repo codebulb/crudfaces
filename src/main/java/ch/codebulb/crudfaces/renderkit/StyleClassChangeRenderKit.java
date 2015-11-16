@@ -82,10 +82,13 @@ import org.primefaces.component.ajaxstatus.AjaxStatus;
  * <p>
  * Activate the render kit in your web.xml:</p>
  * <pre class="brush:xml">
- * &lt;factory&gt;
- * &lt;render-kit-factory&gt;ch.codebulb.crudfaces.renderkit.StyleClassChangeRenderKitFactory&lt;/render-kit-factory&gt;
- * &lt;/factory&gt;
- * </pre>
+&lt;factory&gt;
+	&lt;render-kit-factory&gt;ch.codebulb.crudfaces.renderkit.StyleClassChangeRenderKitFactory&lt;/render-kit-factory&gt;
+&lt;/factory&gt;
+</pre>
+ * 
+ * <p>Also make sure that you don't override CrudFaces' default web.xml <code>&lt;context-param&gt;</code>
+ * <code>primefaces.THEME</code> = <code>none</code></p>
  *
  * <h2>Known restrictions</h2>
  * <ul>

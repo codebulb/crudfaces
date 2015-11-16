@@ -22,7 +22,7 @@ import org.primefaces.expression.SearchExpressionFacade;
 /**
  * <p>
  * The PrimeFaces
- * <a href="http://www.primefaces.org/showcase/ui/misc/focus.xhtml">focus</a>'s
+ * <code><a href="http://www.primefaces.org/showcase/ui/misc/focus.xhtml">focus</a></code>'s
  * default renderer is overridden with a custom one. It changes the behavior as
  * follows:</p>
  * <ul>

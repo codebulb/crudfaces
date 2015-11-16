@@ -39,9 +39,7 @@ import java.util.HashMap;
  * Strings using <code>#{I18N}</code> as a unified access interface with the
  * ability to override CrudFaces default message Strings with your own message
  * Strings. CrudFaces ships with default messages for many general-purpose
- * message keys, e.g. "save" or "cancel". See
- * <h:link outcome="/global/message-bundle.xhtml">message-bundle</h:link> for
- * details.</li>
+ * message keys, e.g. "save" or "cancel".</li>
  * <li>The I18N EL bean offers a simple interface to provide up to 5 message
  * String parameters. It is far more concise than using e.g. OmniFaces'
  * <code>&lt;of:format...&gt;</code> EL functions with a message lookup.</li>

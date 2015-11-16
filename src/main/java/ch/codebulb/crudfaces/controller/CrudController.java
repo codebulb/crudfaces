@@ -12,7 +12,9 @@
  */
 package ch.codebulb.crudfaces.controller;
 
+import ch.codebulb.crudfaces.model.CrudEntity;
 import ch.codebulb.crudfaces.model.CrudIdentifiable;
+import ch.codebulb.crudfaces.service.CrudService;
 
 /**
  * <p>
@@ -23,26 +25,31 @@ import ch.codebulb.crudfaces.model.CrudIdentifiable;
  * </p>
  * <p>
  * In order to create a CRUD controller for an entity type, make sure the entity
- * implements <code>CrudIdentifiable</code> (or inherits from
- * <code>CrudEntity</code>), implement <code>CrudController</code> for the
+ * implements {@link CrudIdentifiable} (or inherits from
+ * {@link CrudEntity}), implement <code>CrudController</code> for the
  * entity and register it as a CDI or JSF bean in the container (depending on
  * beans.xml <code>bean-discovery-mode</code>, explicit registration may not be
  * necessary), and in the JSF EL (e.g. though <code>@Named</code>).</p>
  * <p>
- * For this demo application, the controller backing bean implementation for the
- * <code>Customer</code> entity extends <code>CrudController</code> like
+ * As an example, a controller backing bean implementation for a
+ * <code>Customer</code> entity can extend <code>CrudController</code> like
  * this:</p>
  * <pre class="brush:java">
- * &#064;ViewScoped &#064;Named public class CustomerController extends
- * CrudTableController&lt;Customer&gt; { &#064;Inject private CustomerService
- * service;
- *
- * &#064;Override protected CrudService&lt;Customer&gt; getService() { return
- * service; } }
- * </pre>
+&#064;ViewScoped
+&#064;Named
+public class CustomerController extends CrudTableController&lt;Customer&gt; {
+    &#064;Inject
+    private CustomerService service;
+    
+    &#064;Override
+    protected CrudService&lt;Customer&gt; getService() {
+        return service;
+    }
+}
+                </pre>
  * <ul>
  * <li>Within the <code>getService()</code> method, return the concrete
- * <code>CrudService</code> for the entity type in question which you should
+ * {@link CrudService} for the entity type in question which you should
  * dependency-inject into the controller.</li>
  * </ul>
  * <p>
@@ -51,20 +58,16 @@ import ch.codebulb.crudfaces.model.CrudIdentifiable;
  * out-of-the-box.
  * </p>
  * <p>
- * CrudController supports <h:link outcome="/crud/index.xhtml">three ways of
- * building a view</h:link>:</p>
+ * <code>CrudController</code> supports three ways of
+ * building a view:</p>
  * <ul>
- * <li>a <h:link outcome="/crud/restful/index.xhtml">RESTful, stateless separate
- * master / details view</h:link></li>
- * <li>a <h:link outcome="/crud/stateless/index.xhtml">stateless combined master
- * / detail view</h:link></li>
- * <li>a <h:link outcome="/crud/stateful/index.xhtml">stateful combined master /
- * detail view</h:link></li>
+ * <li>a RESTful, stateless separate
+ * master / details view</li>
+ * <li>a stateless combined master
+ * / detail view</li>
+ * <li>a stateful combined master /
+ * detail view</li>
  * </ul>
- * <p>
- * This documentation features a tutorial for every one of these view flavors.
- * Check them out to see which view type best suits your business requirements
- * and how to implement it.</p>
  * <h2>Known restrictions</h2>
  * <ul>
  * <li>Only basic support for PrimeFaces features. No support for "inline edit"

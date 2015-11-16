@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * <p>
- * A mocked {@link CrudService} implementation which stores eentities in a
+ * A mocked {@link CrudService} implementation which stores entities in a
  * {@link HashMap} rather than persisting them in an actual persistence
  * storage.</p>
  *
@@ -30,7 +30,7 @@ import java.util.Map;
  * database / persistence configuration set up. You may then use a
  * <code>CrudServiceMocked</code> implementation as e.g. a
  * <code>@SessionScoped</code> bean, and later change to a true
- * <code>CrudService</code> without any interface changes.</p>
+ * {@link CrudService} without any interface changes.</p>
  *
  * @author Nicolas Hofstetter (codebulb.ch)
  * @since 0.1

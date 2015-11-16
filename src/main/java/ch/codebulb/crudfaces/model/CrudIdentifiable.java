@@ -14,8 +14,12 @@ package ch.codebulb.crudfaces.model;
 
 import java.io.Serializable;
 
+import ch.codebulb.crudfaces.controller.CrudController;
+import ch.codebulb.crudfaces.service.CrudService;
+
 /**
- * A minimal contract any entity type recognized by CrudFaces controllers / services must fulfill.
+ * A minimal contract any entity type recognized by {@link CrudService} /
+ * {@link CrudController} must fulfill.
  *
  * @author Nicolas Hofstetter (codebulb.ch)
  * @since 0.1

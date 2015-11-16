@@ -17,38 +17,51 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import ch.codebulb.crudfaces.service.CrudService;
+import ch.codebulb.crudfaces.controller.CrudController;;
+
 /**
  * <p>
  * An abstract generic base class for a persistent business entity (model).
  * </p>
  * <p>
- * Use either the <code>CrudIdentifiable</code> interface or the
+ * Use either the {@link CrudIdentifiable} interface or the
  * <code>CrudEntity</code> class to derive your entity model classes from. This
- * is the only prerequisite to use them with a <code>CrudService</code> and a
- * <code>CrudController</code>.</p>
+ * is the only prerequisite to use them with a {@link CrudService} and a
+ * {@link CrudController}.</p>
  * <p>
  * The difference between the interface and the class is that the latter
  * provides an auto-generated <code>Long id</code> field implementation
  * out-of-the-box.</p>
  * <p>
- * For this demo application, a <code>Customer</code> entity is created by
+ * As an example, a <code>Customer</code> entity can be created by
  * deriving from
  * <code>CrudEntity</code> like so:</p>
  * <pre class="brush:java">
- * &#064;Entity public class Customer extends CrudEntity { &#064;NotNull private
- * String firstName; &#064;NotNull private String lastName;
- *
- * public String getInitials() { return String.valueOf(firstName.charAt(0)) +
- * String.valueOf(lastName.charAt(0)); }
- *
- * public String getFirstName() { return firstName; }
- *
- * public void setFirstName(String firstName) { this.firstName = firstName; }
- *
- * public String getLastName() { return lastName; }
- *
- * public void setLastName(String lastName) { this.lastName = lastName; } }
- * </pre>
+&#064;Entity
+public class Customer extends CrudEntity {
+    &#064;NotNull
+    private String firstName;
+    &#064;NotNull
+    private String lastName;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+}
+</pre>
  * <p>
  * Apart from the <code>&#064;Entity</code> annotation, this class consists
  * solely of business logic.</p>

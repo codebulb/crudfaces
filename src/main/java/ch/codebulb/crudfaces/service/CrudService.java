@@ -15,6 +15,7 @@ package ch.codebulb.crudfaces.service;
 import ch.codebulb.crudfaces.model.CrudEntity;
 import ch.codebulb.crudfaces.model.CrudIdentifiable;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
@@ -29,33 +30,42 @@ import javax.transaction.Transactional;
  * <p>
  * This service realizes the basic CRUD operations:</p>
  * <ul>
- * <li>Create: create() + save()</li>
- * <li>Read: findById(Long id) / findAll()</li>
- * <li>Update: save()</li>
- * <li>Delete: delete()</li>
+ * <li><b>Create (C):</b> <code>create()</code> + <code>save()</code></li>
+ * <li><b>Read (R)</b>: <code>findById(Long id)</code> / <code>findAll()</code></li>
+ * <li><b>Update (U)</b>: <code>save()</code></li>
+ * <li><b>Delete (D)</b>: <code>delete()</code></li>
  * </ul>
  * <p>
  * In order to create a CRUD service for an entity type, make sure the entity
- * implements <code>CrudIdentifiable</code> (or inherits from
- * <code>CrudEntity</code>), implement <code>CrudService</code> for the entity
+ * implements {@link CrudIdentifiable} (or inherits from
+ * {@link CrudEntity}), implement <code>CrudService</code> for the entity
  * and register it as a CDI bean in the container (depending on beans.xml
  * <code>bean-discovery-mode</code>, explicit registration may not be
  * necessary).</p>
  * <p>
- * For this demo application, the service implementation for the
- * <code>Customer</code> entity extends <code>CrudService</code> like this:</p>
+ * As an example, a service implementation for a
+ * <code>Customer</code> entity can extend <code>CrudService</code> like this:</p>
  * <pre class="brush:java">
- * public class CustomerService extends CrudService&lt;Customer&gt; {
- * &#064;Override &#064;PersistenceContext protected void setEm(EntityManager
- * em) { super.setEm(em); }
- *
- * &#064;Override public Customer create() { return new Customer(); }
- *
- * &#064;Override public Class&lt;Customer&gt; getModelClass() { return
- * Customer.class; } }
- * </pre>
+public class CustomerService extends CrudService&lt;Customer&gt; {
+    &#064;Override
+    &#064;PersistenceContext
+    protected void setEm(EntityManager em) {
+        super.setEm(em);
+    }
+
+    &#064;Override
+    public Customer create() {
+        return new Customer();
+    }
+
+    &#064;Override
+    public Class&lt;Customer&gt; getModelClass() {
+        return Customer.class;
+    }
+}
+                </pre>
  * <ul>
- * <li>Within the <code>setEm(EntityManager)</code> method, simply call the
+ * <li>Within the {@link #setEm(EntityManager)} method, simply call the
  * super method. The important part is that you inject your
  * <code>@PersistenceContext</code> in this method by annotation.</li>
  * </ul>
@@ -65,17 +75,14 @@ import javax.transaction.Transactional;
  *
                 <p>
  * Conveniently, CrudFaces also comes with an alternative implementation of
- * <code>CrudService</code> named <code>CrudServiceMocked</code>. As its name
+ * <code>CrudService</code> named {@link CrudServiceMocked}. As its name
  * suggests, this implementation's "persistence" functionality is based on a
- * simple <code>HashMap</code> storing the saved entities. Whilst of no use in a
+ * simple {@link HashMap} storing the saved entities. Whilst of no use in a
  * real-world production environment, this class might come in handy if you want
  * to try something out without having a proper database / persistence
- * configuration set up. You may then use a <code>CrudServiceMocked</code>
+ * configuration set up. You may then use a {@link CrudServiceMocked}
  * implementation as e.g. a <code>@SessionScoped</code> bean, and later change
  * to a true <code>CrudService</code> without any interface changes.</p>
- * <p>
- * In fact, this showcases' live demo uses a <code>@SessionScoped</code>
- * <code>CrudServiceMocked</code> implementation.</p>
  *
                 <h2>Known restrictions</h2>
  * <ul>
