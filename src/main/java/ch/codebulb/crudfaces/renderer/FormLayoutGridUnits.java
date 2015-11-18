@@ -31,15 +31,6 @@ public abstract class FormLayoutGridUnits {
         this.provider = provider;
     }
     
-    public FormLayoutGridUnits minus(FormLayoutGridUnits other) {
-        return provider.createUnits(
-                sm - other.sm,
-                md - other.md,
-                lg - other.lg,
-                xl - other.xl
-        );
-    }
-    
     public String getStyleClasses() {
         StringBuilder sb = new StringBuilder();
         appendSmClass(sb, max((int) (sm)), provider.getResolution());
