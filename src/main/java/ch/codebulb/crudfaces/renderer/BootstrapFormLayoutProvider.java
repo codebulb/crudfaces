@@ -83,20 +83,20 @@ public class BootstrapFormLayoutProvider {
         return ret;
     }
     
-    private FormLayoutGridUnits createButtonBarOffsetUnits(double xl) {
+    private FormLayoutGridUnits createButtonBarOffsetUnits(double xl, int groups) {
         FormLayoutGridUnits ret = new FormLayoutGridUnits.BootstrapFormGridOffsetUnits(this);
         ret.sm = 0;
-        ret.md = xl * 2;
-        ret.lg = xl * 2;
+        ret.md = xl * groups;
+        ret.lg = xl * groups;
         ret.xl = xl;
         return ret;
     }
 
 
-    public void writeButtonBar(FacesContext context, boolean gapBeforeButtonBar, int firstColspan, Collection<UIComponent> buttons) throws IOException {
+    public void writeButtonBar(FacesContext context, boolean gapBeforeButtonBar, int firstColspan, int groups, Collection<UIComponent> buttons) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
-        FormLayoutGridUnits offsetUnits = createButtonBarOffsetUnits(firstColspan);
+        FormLayoutGridUnits offsetUnits = createButtonBarOffsetUnits(firstColspan, groups);
         FormLayoutGridUnits buttonBarUnits = createUnitsForXLarge(getResolution() - firstColspan);
 
         writer.startElement("div", null);

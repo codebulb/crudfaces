@@ -222,7 +222,7 @@ public class FormLayoutRenderer extends Renderer {
         if (groupRatios != null) {
             firstColspan = groupRatios[0] / formLayout.getGroups();
         }
-        formLayoutProvider.writeButtonBar(context, true, firstColspan, buttons.values());
+        formLayoutProvider.writeButtonBar(context, true, firstColspan, formLayout.getGroups(), buttons.values());
         
         writer.endElement("div");
     }
