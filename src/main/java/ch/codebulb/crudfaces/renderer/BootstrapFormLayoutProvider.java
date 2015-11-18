@@ -91,13 +91,17 @@ public class BootstrapFormLayoutProvider {
         ret.xl = xl;
         return ret;
     }
-
+    
+    private FormLayoutGridUnits getLeftoverPlace(FormLayoutGridUnits other) {
+        return createUnits(
+            getResolution()-other.sm, getResolution()-other.md, getResolution()-other.lg, getResolution()-other.xl);
+    }
 
     public void writeButtonBar(FacesContext context, boolean gapBeforeButtonBar, int firstColspan, int groups, Collection<UIComponent> buttons) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
 
         FormLayoutGridUnits offsetUnits = createButtonBarOffsetUnits(firstColspan, groups);
-        FormLayoutGridUnits buttonBarUnits = createUnitsForXLarge(getResolution() - firstColspan);
+        FormLayoutGridUnits buttonBarUnits = getLeftoverPlace(offsetUnits);
 
         writer.startElement("div", null);
         writer.writeAttribute("class", 
