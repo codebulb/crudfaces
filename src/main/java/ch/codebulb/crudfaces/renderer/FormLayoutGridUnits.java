@@ -42,20 +42,20 @@ public abstract class FormLayoutGridUnits {
     
     public String getStyleClasses() {
         StringBuilder sb = new StringBuilder();
-        appendSmClass(sb, (int) (sm), provider.getResolution());
+        appendSmClass(sb, max((int) (sm)), provider.getResolution());
         sb.append(" ");
         if (md != sm) {
-            appendMdClass(sb, (int) (md), provider.getResolution());
+            appendMdClass(sb, max((int) (md)), provider.getResolution());
             sb.append(" ");
         }
         
         if (lg != md) {
-            appendLgClass(sb, (int) (lg), provider.getResolution());
+            appendLgClass(sb, max((int) (lg)), provider.getResolution());
             sb.append(" ");
         }
         
         if (xl != lg) {
-            appendXlClass(sb, (int) (xl), provider.getResolution());
+            appendXlClass(sb, max((int) (xl)), provider.getResolution());
             sb.append(" ");
         }
         
@@ -69,6 +69,14 @@ public abstract class FormLayoutGridUnits {
     protected abstract void appendSmClass(StringBuilder sb, int sm, int resolution);
 
     protected abstract void appendXlClass(StringBuilder sb, int md, int resolution);
+    
+    private int max(int original) {
+        if (original > provider.getResolution()) {
+            return provider.getResolution();
+        }else {
+            return original;
+        }
+    }
     
     public static class BootstrapFormGridUnits extends FormLayoutGridUnits {
         protected String offsetStyle = null;
