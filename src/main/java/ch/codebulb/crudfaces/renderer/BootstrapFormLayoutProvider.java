@@ -112,21 +112,14 @@ public class BootstrapFormLayoutProvider {
         }
         writer.endElement("div");
     }
-
-    public String getMessageCellStyleClass() {
-        return "form-horizontal";
-    }
-
-
+    
     public String getMessageComponentSubCellStyleClass() {
         return "col-sm-8";
     }
 
-
     public String getMessageSubCellStyleClass() {
         return "col-sm-4";
     }
-
 
     public String getComponentClass(UIComponent component) {
         if (component instanceof HtmlOutputLabel) {
