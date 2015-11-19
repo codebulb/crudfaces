@@ -193,11 +193,11 @@ public class FormLayoutRenderer extends Renderer {
     private void encodeCombinedComponentWithMessage(UIComponent child, UIMessage attachedMessage, FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement("div", null);
-        String invalidPrefix = "";
+        String invalidPrefix = null;
         if (child instanceof UIInput && !((UIInput)child).isValid()) {
            invalidPrefix = formLayoutProvider.getMessageComponentSubCellStyleClass();
         }
-        writer.writeAttribute("class", invalidPrefix + "cf-formlayout-componentcell", null);
+        writer.writeAttribute("class", StringsHelper.join(" ").add(invalidPrefix).add("cf-formlayout-componentcell").toString(), null);
         child.encodeAll(context);
         writer.endElement("div");
 
@@ -205,7 +205,7 @@ public class FormLayoutRenderer extends Renderer {
         if (child instanceof UIInput && !((UIInput)child).isValid()) {
            invalidPrefix = formLayoutProvider.getMessageSubCellStyleClass();
         }
-        writer.writeAttribute("class", invalidPrefix + "cf-formlayout-messagecell", null);
+        writer.writeAttribute("class", StringsHelper.join(" ").add(invalidPrefix).add("cf-formlayout-messagecell").toString(), null);
         attachedMessage.encodeAll(context);
         writer.endElement("div");
     }

@@ -114,17 +114,17 @@ public class BootstrapFormLayoutProvider {
     }
 
     public String getMessageCellStyleClass() {
-        return "form-horizontal ";
+        return "form-horizontal";
     }
 
 
     public String getMessageComponentSubCellStyleClass() {
-        return "col-sm-8 ";
+        return "col-sm-8";
     }
 
 
     public String getMessageSubCellStyleClass() {
-        return "col-sm-4 ";
+        return "col-sm-4";
     }
 
 

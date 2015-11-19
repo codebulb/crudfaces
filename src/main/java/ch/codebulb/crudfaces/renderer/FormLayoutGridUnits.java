@@ -12,6 +12,10 @@
  */
 package ch.codebulb.crudfaces.renderer;
 
+import ch.codebulb.crudfaces.util.StringsHelper;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple container to hold form grid units
  * for use within {@link FormLayoutRenderer}.
@@ -32,34 +36,30 @@ public abstract class FormLayoutGridUnits {
     }
     
     public String getStyleClasses() {
-        StringBuilder sb = new StringBuilder();
-        appendSmClass(sb, max((int) (sm)), provider.getResolution());
-        sb.append(" ");
+        List<String> styleClasses = new ArrayList<>();
+        styleClasses.add(buildSmClass(max((int) (sm)), provider.getResolution()));
         if (md != sm) {
-            appendMdClass(sb, max((int) (md)), provider.getResolution());
-            sb.append(" ");
+            styleClasses.add(buildMdClass(max((int) (md)), provider.getResolution()));
         }
         
         if (lg != md) {
-            appendLgClass(sb, max((int) (lg)), provider.getResolution());
-            sb.append(" ");
+            styleClasses.add(buildLgClass(max((int) (lg)), provider.getResolution()));
         }
         
         if (xl != lg) {
-            appendXlClass(sb, max((int) (xl)), provider.getResolution());
-            sb.append(" ");
+            styleClasses.add(buildXlClass(max((int) (xl)), provider.getResolution()));
         }
         
-        return sb.toString();
+        return StringsHelper.join(styleClasses, " ");
     }
 
-    protected abstract void appendLgClass(StringBuilder sb, int md, int resolution);
+    protected abstract String buildLgClass(int md, int resolution);
 
-    protected abstract void appendMdClass(StringBuilder sb, int md, int resolution);
+    protected abstract String buildMdClass(int md, int resolution);
 
-    protected abstract void appendSmClass(StringBuilder sb, int sm, int resolution);
+    protected abstract String buildSmClass(int sm, int resolution);
 
-    protected abstract void appendXlClass(StringBuilder sb, int md, int resolution);
+    protected abstract String buildXlClass(int md, int resolution);
     
     private int max(int original) {
         if (original > provider.getResolution()) {
@@ -77,39 +77,47 @@ public abstract class FormLayoutGridUnits {
         }
 
         @Override
-        protected void appendSmClass(StringBuilder sb, int sm, int resolution) {
+        protected String buildSmClass(int sm, int resolution) {
+            StringBuilder sb = new StringBuilder();
             sb.append("col-xs-");
             if (offsetStyle != null) {
                 sb.append(offsetStyle);
             }
             sb.append(sm);
+            return sb.toString();
         }
 
         @Override
-        protected void appendMdClass(StringBuilder sb, int md, int resolution) {
+        protected String buildMdClass(int md, int resolution) {
+            StringBuilder sb = new StringBuilder();
             sb.append("col-sm-");
             if (offsetStyle != null) {
                 sb.append(offsetStyle);
             }
             sb.append(md);
+            return sb.toString();
         }
 
         @Override
-        protected void appendLgClass(StringBuilder sb, int lg, int resolution) {
+        protected String buildLgClass(int lg, int resolution) {
+            StringBuilder sb = new StringBuilder();
             sb.append("col-md-");
             if (offsetStyle != null) {
                 sb.append(offsetStyle);
             }
             sb.append(lg);
+            return sb.toString();
         }
 
         @Override
-        protected void appendXlClass(StringBuilder sb, int xl, int resolution) {
+        protected String buildXlClass(int xl, int resolution) {
+            StringBuilder sb = new StringBuilder();
             sb.append("col-lg-");
             if (offsetStyle != null) {
                 sb.append(offsetStyle);
             }
             sb.append(xl);
+            return sb.toString();
         }
     }
     
