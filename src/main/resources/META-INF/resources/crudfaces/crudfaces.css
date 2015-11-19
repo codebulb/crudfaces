@@ -33,6 +33,15 @@
     margin-right: 0px;
 }
 
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-cell > .btn {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-cell > .btn:first-child {
+    margin-left: 0px;
+}
+
 .form-horizontal.cf-formlayout > .cf-formlayout-buttonbar > :first-child {
     margin-left: 0px;
 }
