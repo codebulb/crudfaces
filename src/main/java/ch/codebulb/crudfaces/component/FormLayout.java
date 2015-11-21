@@ -68,6 +68,9 @@ import org.omnifaces.util.State;
  * <code>a:inline="true"</code> HTML5 pass-through attribute to it. If on the
  * other hand you want a non-button component to be placed in the "button bar",
  * use the <code>a:buttonBar="true"</code> pass-through attribute.</li>
+ * <li>Set the <code>a:colspan</code> HTML5 pass-through attribute on any component to achieve a 
+ * "colspan" effect: The component will be placed in a cell which spans the 
+ * number of columns provided whilst keeping the layout responsive.</li>
  * </ul>
  * <p>
  * Note that <code>&lt;cf:formLayout&gt;</code> does not implement an actual

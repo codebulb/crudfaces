@@ -45,15 +45,11 @@ public class FormLayoutRenderer extends Renderer {
     public static final String RENDERER_TYPE = "ch.codebulb.FormLayout";
     private BootstrapFormLayoutProvider formLayoutProvider = new BootstrapFormLayoutProvider();
     
-    int currentGroup;
-    int currentGroupColumn;
-    String[] groupColumnClasses;
-    int[] groupRatios;
+    private int[] groupRatios;
+    private FormLayoutModel model;
     
     protected Map<UIComponent, UIMessage> componentsWithAttachedMessages = new HashMap<>();
     protected Map<String, UIComponent> buttons = new LinkedHashMap<>();
-    
-    private int currentColspan = 1;
 
     @Override
     public boolean getRendersChildren() {
@@ -87,16 +83,13 @@ public class FormLayoutRenderer extends Renderer {
         componentsWithAttachedMessages = new HashMap<>();
         buttons = new LinkedHashMap<>();
         
-        currentGroup = 0;
-        currentGroupColumn = 0;
-        
         String[] groupRatiosString = component.getGroupRatios().split(" ");
         groupRatios = new int[groupRatiosString.length];
-        groupColumnClasses = new String[groupRatiosString.length];
         for (int i = 0; i < groupRatiosString.length; i++) {
             groupRatios[i] = Integer.parseInt(groupRatiosString[i]);
-            groupColumnClasses[i] = formLayoutProvider.createUnits(groupRatios[i]).getStyleClasses();
-        }        
+        }
+        
+        model = new FormLayoutModel(component.getGroups(), groupRatios, formLayoutProvider.getResolution());
     }
 
     @Override
@@ -105,80 +98,81 @@ public class FormLayoutRenderer extends Renderer {
             throw new NullPointerException();
         }
         if (component.getChildCount() > 0) {
-            assignMessages(component, context);
+            findMessagesAndButtons(component, context);
             
             for (UIComponent child : component.getChildren()) {
-                encodeChild(context, (FormLayout) component, child);
+                if (shouldRender(child)) {
+                    model.add(child);
+                }
             }
+            
+            encode(context, (FormLayout) component);
         }
     }
 
-    private void assignMessages(UIComponent component, FacesContext context) {
+    private void findMessagesAndButtons(UIComponent component, FacesContext context) {
         // get message components
         for (UIComponent child : component.getChildren()) {
             if (child instanceof UIMessage) {
                 UIComponent target = SearchExpressionFacade.resolveComponent(context, child, ((UIMessage) child).getFor());
                 componentsWithAttachedMessages.put(target, (UIMessage) child);
             }
+            else if(isButton(child)) {
+                buttons.put(child.getClientId(), child);
+            }
         }
     }
     
-    private void encodeChild(FacesContext context, FormLayout component, UIComponent child) throws IOException {
-        if (isButton(child)) {
-            buttons.put(child.getClientId(), child);
-        }
-        
-        if (isMessage(child) || isButton(child)) {
-            return;
-        }
-        
+    private void encode(FacesContext context, FormLayout formLayout) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
-
-        if (currentGroup == 0 && currentGroupColumn == 0) {
+        
+        for (FormLayoutModel.Row row : model.getRows()) {
             writer.startElement("div", null);
             writer.writeAttribute("class", StringsHelper.join(" ").add(formLayoutProvider.getRowStyleClass()).add("cf-formlayout-row").toString(), null);
-        }
-
-        if (currentGroupColumn == 0) {
-            writer.startElement("div", null);
-            writer.writeAttribute("class", StringsHelper.join(" ").add(formLayoutProvider.getGroupStyleClass())
-                    .add(formLayoutProvider.createUnitsForXLarge(formLayoutProvider.getResolution() / component.getGroups()).getStyleClasses())
+            
+            for (FormLayoutModel.Group group : row.getGroups()) {
+                writer.startElement("div", null);
+                writer.writeAttribute("class", StringsHelper.join(" ").add(formLayoutProvider.getGroupStyleClass())
+                    .add(formLayoutProvider.createUnitsForXLarge(formLayoutProvider.getResolution() / formLayout.getGroups() * group.getRatio()).getStyleClasses())
                     .add("cf-formlayout-group").toString(), null);
-        }
+                
+                for (FormLayoutModel.Comp comp : group.getComps()) {
+                    UIComponent component = comp.component;
+                    
+                    writer.startElement("div", null);
 
-        writer.startElement("div", null);
+                    String cellStyleClass = formLayoutProvider.createUnits(comp.getOriginalRatio(), comp.getRatio()).getStyleClasses();
 
-        String cellStyleClass = groupColumnClasses[currentGroupColumn];
+                    writer.writeAttribute("class", StringsHelper.join(" ").
+                            add(cellStyleClass).add("cf-formlayout-cell").add(formLayoutProvider.getComponentClass(component)).toString(), null);
 
-        writer.writeAttribute("class", StringsHelper.join(" ").add(cellStyleClass).add("cf-formlayout-cell").add(formLayoutProvider.getComponentClass(child)).toString(), null);
+                    UIMessage attachedMessage = componentsWithAttachedMessages.get(component);
 
-        UIMessage attachedMessage = componentsWithAttachedMessages.get(child);
+                    if (attachedMessage == null) {
+                        component.encodeAll(context);
+                    }
+                    else {
+                        encodeCombinedComponentWithMessage(component, attachedMessage, context);
+                    }
 
-        if (attachedMessage == null) {
-            child.encodeAll(context);
-        }
-        else {
-            encodeCombinedComponentWithMessage(child, attachedMessage, context);
-        }
-
-        writer.endElement("div");
-
-        currentGroupColumn = currentGroupColumn + currentColspan;
-        if (currentGroupColumn >= groupColumnClasses.length) {
-            currentGroup = (currentGroup + 1) % component.getGroups();
-            currentGroupColumn = 0;
-        }
-
-        if (currentGroupColumn == 0) {
+                    // end comp
+                    writer.endElement("div");
+                }
+                
+                // end group
+                writer.endElement("div");
+            }
+            
+            // end row
             writer.endElement("div");
         }
-
-        if (currentGroup == 0 && currentGroupColumn == 0) {
-            writer.endElement("div");
-        } 
     }
     
-    private boolean isButton(UIComponent child) {
+    private static boolean shouldRender(UIComponent child) {
+        return !(isMessage(child) || isButton(child));
+    }
+    
+    private static boolean isButton(UIComponent child) {
         return ((child instanceof HtmlCommandButton || child instanceof CommandButton || 
                 HtmlOutcomeTargetButton.class.isAssignableFrom(child.getClass()) ||
                 HtmlCommandLink.class.isAssignableFrom(child.getClass()))
@@ -186,8 +180,18 @@ public class FormLayoutRenderer extends Renderer {
                 && !ComponentsHelper.getPassThroughAttribute(child, "inline", Boolean.class);
     }
     
-    private boolean isMessage(UIComponent child) {
+    private static boolean isMessage(UIComponent child) {
         return child instanceof UIMessage;
+    }
+    
+    static int getColspan(UIComponent child) {
+        int ret = ComponentsHelper.getPassThroughAttribute(child, "colspan", Integer.class);
+        if (ret == 0) {
+            return 1;
+        }
+        else {
+            return ret;
+        }
     }
 
     private void encodeCombinedComponentWithMessage(UIComponent child, UIMessage attachedMessage, FacesContext context) throws IOException {

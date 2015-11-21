@@ -52,17 +52,15 @@ public class BootstrapFormLayoutProvider {
     public int getResolution() {
         return 12;
     }
-
-
-    public FormLayoutGridUnits createUnits(double md) {
+    
+    public FormLayoutGridUnits createUnits(double md, double xl) {
         FormLayoutGridUnits ret = new FormLayoutGridUnits.BootstrapFormGridUnits(this);
         ret.sm = getResolution();
         ret.md = md;
         ret.lg = md;
-        ret.xl = md;
+        ret.xl = xl;
         return ret;
     }
-
 
     public FormLayoutGridUnits createUnitsForXLarge(double xl) {
         FormLayoutGridUnits ret = new FormLayoutGridUnits.BootstrapFormGridUnits(this);
@@ -116,11 +114,11 @@ public class BootstrapFormLayoutProvider {
     public String getMessageComponentSubCellStyleClass() {
         return "col-sm-8";
     }
-
+    
     public String getMessageSubCellStyleClass() {
         return "col-sm-4";
     }
-
+    
     public String getComponentClass(UIComponent component) {
         if (component instanceof HtmlOutputLabel) {
             return "control-label";

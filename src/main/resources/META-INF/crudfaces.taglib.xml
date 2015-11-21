@@ -78,6 +78,27 @@ use the <code>a:buttonBar="true"</code> pass-through attribute.</li>
 Note that <code>&lt;cf:formLayout&gt;</code> does not implement an actual
 HTML <code>&lt;form&gt;</code>, it's really just for layouting purposes which
 leaves you the free choice of how to integrate it in an actual HTML form.</p>
+
+<h2>Supported HTML5 pass-through attributes for direct child
+components</h2>
+<p>Declare the <code>xmlns:a="http://xmlns.jcp.org/jsf/passthrough"</code>
+namespace and set these attributes on direct child components.</p>
+<ul>
+  <li><b><code>a:inline</code></b>: <code>boolean</code>, <i>defaults to <code>false</code></i>: Forces placement of a "button" component
+inside the form, according to its position within the markup, rather
+than placing it in the "button bar" at the bottom of the form which is
+the default for all "button-like" components.</li>
+  <li><b><code>a:buttonBar</code></b>: <code>boolean</code>, <i>defaults to <code>false</code></i>: Forces placement of 
+"non-button" component&nbsp;in the "button bar" at the bottom of
+the form rather than inside the form&nbsp;according to its position
+within the markup.</li>
+  <li><b><code>a:colspan</code></b>: <code>int</code>, <i>defaults to <code>1</code></i>: Specifies the number of group positions the
+component occupies. Use this attribute to achieve a
+"colspan" effect: The component will be placed in a cell which spans
+the number of columns provided whilst keeping the layout responsive.
+  </li>
+</ul>
+
 <h2>Known restrictions</h2>
 <ul>
 <li>Nesting <code>&lt;cf:formLayout&gt;</code>s is not supported.</li>
