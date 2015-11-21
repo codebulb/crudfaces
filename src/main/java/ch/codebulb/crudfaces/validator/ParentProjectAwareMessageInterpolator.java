@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
 import javax.validation.MessageInterpolator;
 import org.omnifaces.util.Components;
 import org.omnifaces.util.Faces;
-import static org.omnifaces.util.FacesLocal.getLocale;
 
 
 /**
@@ -46,22 +45,35 @@ public class ParentProjectAwareMessageInterpolator implements MessageInterpolato
     }
 
     @Override
-    public String interpolate(String messageTemplate, Context context, Locale locale) {  
+    public String interpolate(String messageTemplate, Context context, Locale locale) {
+        // in case it's a Bean Validation constraint message
         if (messageTemplate.startsWith("{") && messageTemplate.endsWith("}")) {
             String template = messageTemplate.substring(1, messageTemplate.length()-1);
 
+            // search through all message bundles
             ResourceBundle messageBundle = Faces.getMessageBundle();
             try {
-                return (String) messageBundle.getObject(template);
+                String output = (String) messageBundle.getObject(template);
+                return interpolateConstraintAttributes(output, context);
             }
             catch (MissingResourceException ex) {
-                String message = FacesHelper.i18nOrNull(template, context.getValidatedValue(), Components.getLabel(Components.getCurrentComponent()));
-                if (message != null) {
-                    return message;
+                // not found:
+                // search through all resource bundles
+                String output = FacesHelper.i18nOrNull(template, context.getValidatedValue(), Components.getLabel(Components.getCurrentComponent()));
+                if (output != null) {
+                    return interpolateConstraintAttributes(output, context);
                 }
             }
         }
+        // fallback: Use default message interpolation
         return wrapped.interpolate(messageTemplate, context, locale);
+    }
+    
+    private String interpolateConstraintAttributes(String output, Context context) {
+        for (String attribute : context.getConstraintDescriptor().getAttributes().keySet()) {
+            output = output.replaceAll("\\{" + attribute + "\\}", context.getConstraintDescriptor().getAttributes().get(attribute).toString());
+        }
+        return output;
     }
 
 }
