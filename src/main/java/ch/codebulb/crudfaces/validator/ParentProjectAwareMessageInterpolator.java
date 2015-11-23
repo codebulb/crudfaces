@@ -59,7 +59,7 @@ public class ParentProjectAwareMessageInterpolator implements MessageInterpolato
             catch (MissingResourceException ex) {
                 // not found:
                 // search through all resource bundles
-                String output = FacesHelper.i18nOrNull(template, context.getValidatedValue(), Components.getLabel(Components.getCurrentComponent()));
+                String output = FacesHelper.i18nOrNullNoCaps(template, context.getValidatedValue(), Components.getLabel(Components.getCurrentComponent()));
                 if (output != null) {
                     return interpolateConstraintAttributes(output, context);
                 }
