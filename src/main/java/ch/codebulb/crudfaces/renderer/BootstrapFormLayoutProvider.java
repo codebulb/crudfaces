@@ -112,11 +112,11 @@ public class BootstrapFormLayoutProvider {
     }
     
     public String getMessageComponentSubCellStyleClass() {
-        return "col-sm-8";
+        return "col-md-12 col-lg-8";
     }
     
     public String getMessageSubCellStyleClass() {
-        return "col-sm-4";
+        return "col-md-12 col-lg-4";
     }
     
     public String getComponentClass(UIComponent component) {
