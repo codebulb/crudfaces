@@ -42,13 +42,19 @@ public class ApplicationListener extends DefaultServletContextListener {
         LOGGER.log(Level.INFO, "Using CrudFaces version {0}", "0.1");
     }
     
-    // as explained in http://showcase.omnifaces.org/utils/Messages
     private void initOmniFacesMessagesResolver() {
-        Messages.setResolver(new Messages.Resolver() {
-            @Override
-            public String getMessage(String message, Object... params) {
-                return FacesHelper.i18n(message, params);
-            }
-        });
+        try {
+            // as explained in http://showcase.omnifaces.org/utils/Messages
+            Messages.setResolver(new Messages.Resolver() {
+                @Override
+                public String getMessage(String message, Object... params) {
+                    return FacesHelper.i18n(message, params);
+                }
+            });
+        }
+        catch (IllegalStateException ex) {
+            // Fix issue #11: 
+            LOGGER.warning("The OmniFaces Messages resolver has already been set.");
+        }
     }
 }
