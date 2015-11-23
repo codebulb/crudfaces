@@ -41,8 +41,17 @@ import org.primefaces.expression.SearchExpressionFacade;
  */
 @FacesRenderer(componentFamily = UIPanel.COMPONENT_FAMILY, rendererType = FormLayoutRenderer.RENDERER_TYPE)
 public class FormLayoutRenderer extends Renderer {
-
     public static final String RENDERER_TYPE = "ch.codebulb.FormLayout";
+    
+    /**
+     * Global style class override for invalid component cell styling
+     */
+    public static String MESSAGE_COMPONENT_SUBCELL_STYLE_CLASS = null;
+    /**
+     * Global style class override for invalid component message cell styling
+     */
+    public static String MESSAGE_SUBCELL_STYLE_CLASS = null;
+    
     private BootstrapFormLayoutProvider formLayoutProvider = new BootstrapFormLayoutProvider();
     
     private int[] groupRatios;
@@ -197,19 +206,21 @@ public class FormLayoutRenderer extends Renderer {
     private void encodeCombinedComponentWithMessage(UIComponent child, UIMessage attachedMessage, FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement("div", null);
-        String invalidPrefix = null;
+        String invalidStyleClass = null;
         if (child instanceof UIInput && !((UIInput)child).isValid()) {
-           invalidPrefix = formLayoutProvider.getMessageComponentSubCellStyleClass();
+            invalidStyleClass = MESSAGE_COMPONENT_SUBCELL_STYLE_CLASS != null ? MESSAGE_COMPONENT_SUBCELL_STYLE_CLASS : 
+                    formLayoutProvider.getMessageComponentSubCellStyleClass();
         }
-        writer.writeAttribute("class", StringsHelper.join(" ").add(invalidPrefix).add("cf-formlayout-componentcell").toString(), null);
+        writer.writeAttribute("class", StringsHelper.join(" ").add(invalidStyleClass).add("cf-formlayout-componentcell").toString(), null);
         child.encodeAll(context);
         writer.endElement("div");
 
         writer.startElement("div", null);
         if (child instanceof UIInput && !((UIInput)child).isValid()) {
-           invalidPrefix = formLayoutProvider.getMessageSubCellStyleClass();
+            invalidStyleClass = MESSAGE_COMPONENT_SUBCELL_STYLE_CLASS != null ? MESSAGE_SUBCELL_STYLE_CLASS : 
+                    formLayoutProvider.getMessageSubCellStyleClass();
         }
-        writer.writeAttribute("class", StringsHelper.join(" ").add(invalidPrefix).add("cf-formlayout-messagecell").toString(), null);
+        writer.writeAttribute("class", StringsHelper.join(" ").add(invalidStyleClass).add("cf-formlayout-messagecell").toString(), null);
         attachedMessage.encodeAll(context);
         writer.endElement("div");
     }
