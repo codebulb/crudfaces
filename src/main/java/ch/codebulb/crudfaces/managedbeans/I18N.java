@@ -63,7 +63,7 @@ public class I18N extends HashMap<String, String> {
      */
     @Override
     public String get(Object key) {
-        return i18n((String)key);
+        return i18n(key.toString());
     }
     
     /**

@@ -47,7 +47,7 @@ import javax.faces.component.UIComponentBase;
  *
                     <h2>Known restrictions</h2>
  * <ul>
- * <li>Only simple text input PrimeFaces components are supported.</li>
+ * <li>Only some basic PrimeFaces components are supported.</li>
  * </ul>
  * <p>
  * These restrictions are most likely to be addressed and resolved in future

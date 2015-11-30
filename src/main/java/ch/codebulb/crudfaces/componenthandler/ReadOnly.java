@@ -14,6 +14,7 @@ package ch.codebulb.crudfaces.componenthandler;
 
 import ch.codebulb.crudfaces.component.ReadOnlyOutputText;
 import ch.codebulb.crudfaces.util.ComponentsHelper;
+import ch.codebulb.crudfaces.util.FacesHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +83,16 @@ public class ReadOnly extends ComponentHandler {
                 int index = childParent.getChildren().indexOf(child);
                 
                 ReadOnlyOutputText outputText = new ReadOnlyOutputText();
-                String value = ComponentsHelper.getAttribute(child, "value", String.class);
-                outputText.setValue(value);
+                Object value = ComponentsHelper.getAttribute(child, "value", String.class);
+                
+                // boolean checkboxes
+                if (value instanceof Boolean) {
+                    outputText.setValue(FacesHelper.i18nNoCaps(value.toString()));
+                }
+                else {
+                    outputText.setValue(value);
+                }
+                
                 outputText.setId(child.getId());
 
                 childParent.getChildren().add(index, outputText);
