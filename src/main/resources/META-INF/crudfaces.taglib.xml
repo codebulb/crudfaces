@@ -22,6 +22,10 @@
     <short-name>cf</short-name>
 	
     <tag>
+        <tag-name>formLayout</tag-name>
+        <component>
+            <component-type>ch.codebulb.crudfaces.component.FormLayout</component-type>
+        </component>
         <description>
 			<![CDATA[
 				<p>
@@ -40,9 +44,16 @@ built-in containers for JSF and PrimeFaces, e.g.
 <code>&lt;panelGrid&gt;</code>, are based on HTML tables. PrimeFaces provides
 <a href="http://www.primefaces.org/showcase/ui/panel/grid.xhtml">
 an additional set of CSS grid classes</a>, but they don't seem to actually
-work responsively at all; also, they need to be applied explicitly.</p>
+work responsively at all; also, they need to be applied explicitly.
+Since PrimeFaces 5.3, they also provide a <a
+ href="http://www.primefaces.org/showcase/ui/misc/responsive.xhtml">responsive
+design container component</a>. When directly compared with
+CrudFaces' <code>&lt;cf:formLayout&gt;</code> it does however lack implicit styling, true
+resize-aware responsibility and important features as provided here
+e.g. by the <code>a:colspan</code> and the <code>checkboxLabelsInline</code> attributes.
+</p>
 <p>
-This is especially annoying as most JSF web applications typically make heavy
+This situation is especially annoying as most JSF web applications typically make heavy
 use of quite simple grid-like form layouts, but using
 <code>&lt;panelGrid&gt;</code> or applying HTML tables / CSS explicitly is
 cumbersome and diminishes XHTML readability, especially when trying to align
@@ -101,6 +112,7 @@ the number of columns provided whilst keeping the layout responsive.
 
 <h2>Known restrictions</h2>
 <ul>
+<li>Only some basic PrimeFaces components are supported.</li>
 <li>Nesting <code>&lt;cf:formLayout&gt;</code>s is not supported.</li>
 <li>Support for custom styling is very limited; explicitly override the
 default styles is not supported.</li>
@@ -110,11 +122,10 @@ These restrictions are most likely to be addressed and resolved in future
 CrudFaces versions.</p>
 			]]>
         </description>
-        <tag-name>formLayout</tag-name>
-        <component>
-            <component-type>ch.codebulb.crudfaces.component.FormLayout</component-type>
-        </component>
         <attribute>
+            <name>groups</name>
+            <required>false</required>
+            <type>java.lang.Integer</type>
             <description>
 				<![CDATA[
 					<p>The number of groups per row. <i>Defaults to <code>1</code>.</i></p>
@@ -122,11 +133,11 @@ CrudFaces versions.</p>
 					components to be combined in <code>form-group</code>s for use with validation styling. Use <code>groupRatios</code> to control the number of components per group.</p>
 				]]>
             </description>
-            <name>groups</name>
-            <required>false</required>
-            <type>java.lang.Integer</type>
         </attribute>
         <attribute>
+            <name>groupRatios</name>
+            <required>false</required>
+            <type>java.lang.String</type>
             <description>
 				<![CDATA[
 					<p>The aspect ratio of the components in one group, separated by a whitespace character. <i>Defaults to <code>"4 8"</code>.</i></p>
@@ -135,34 +146,46 @@ CrudFaces versions.</p>
 					their respective aspect ratio determines their actual aspect ratio whereby the total number should match the container's max aspect ratio. For a Bootstrap container, this is <code>12</code>.</p>
 				]]>
             </description>
-            <name>groupRatios</name>
-            <required>false</required>
-            <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <name>checkboxLabelsInline</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+            <description>
+				<![CDATA[
+					<p>If <code>true</code> checkbox labels are rendered in the same cell as the checkbox component, rather than rendering them standalone in the preceding cell. <i>Defaults to <code>true</code>.</i></p>
+				]]>
+            </description>
+        </attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <type>java.lang.String</type>
             <description>
 				<![CDATA[
 					<p>The component style class. <i>Defaults to <code>null</code>.</i></p>
 					<p>If present, this style class is added to the outermost container's <code>class</code> attribute.</p>
 				]]>
             </description>
-            <name>styleClass</name>
-            <required>false</required>
-            <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <name>style</name>
+            <required>false</required>
+            <type>java.lang.String</type>
             <description>
 				<![CDATA[
 					<p>The component inline style. <i>Defaults to <code>null</code>.</i></p>
 					<p>If present, this style is added to the outermost container's <code>style</code> attribute.</p>
 				]]>
             </description>
-            <name>style</name>
-            <required>false</required>
-            <type>java.lang.String</type>
         </attribute>
     </tag>
     <tag>
+        <tag-name>readOnly</tag-name>
+        <component>
+            <component-type>ch.codebulb.crudfaces.component.ReadOnly</component-type>
+            <handler-class>ch.codebulb.crudfaces.componenthandler.ReadOnly</handler-class>
+        </component>
         <description>
 			<![CDATA[
 				<p>
@@ -196,27 +219,22 @@ attribute.</p>
 
 <h2>Known restrictions</h2>
 <ul>
-<li>Only simple text input PrimeFaces components are supported.</li>
+<li>Only some basic PrimeFaces components are supported.</li>
 </ul>
 <p>
 These restrictions are most likely to be addressed and resolved in future
 CrudFaces versions.</p>
 			]]>
         </description>
-        <tag-name>readOnly</tag-name>
-        <component>
-            <component-type>ch.codebulb.crudfaces.component.ReadOnly</component-type>
-            <handler-class>ch.codebulb.crudfaces.componenthandler.ReadOnly</handler-class>
-        </component>
         <attribute>
+            <name>disabled</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
             <description>
 				<![CDATA[
 					<p><code>true</code> to disable the functionality. <i>Defaults to <code>false</code>.</i></p>
 				]]>
             </description>
-            <name>disabled</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
         </attribute>
     </tag>
 	

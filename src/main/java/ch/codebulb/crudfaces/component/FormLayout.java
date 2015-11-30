@@ -12,7 +12,6 @@
  */
 package ch.codebulb.crudfaces.component;
 
-import ch.codebulb.crudfaces.renderer.BootstrapFormLayoutProvider;
 import ch.codebulb.crudfaces.renderer.FormLayoutRenderer;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIPanel;
@@ -35,9 +34,17 @@ import org.omnifaces.util.State;
  * <code>&lt;panelGrid&gt;</code>, are based on HTML tables. PrimeFaces provides
  * <a href="http://www.primefaces.org/showcase/ui/panel/grid.xhtml">
  * an additional set of CSS grid classes</a>, but they don't seem to actually
- * work responsively at all; also, they need to be applied explicitly.</p>
+ * work responsively at all; also, they need to be applied explicitly.
+ * Since PrimeFaces 5.3, they also provide a <a
+ * href="http://www.primefaces.org/showcase/ui/misc/responsive.xhtml">responsive
+ * design container component</a>. When directly compared with CrudFaces'
+ * <code>&lt;cf:formLayout&gt;</code> it does however lack implicit styling,
+ * true resize-aware responsibility and important features as provided here e.g.
+ * by the <code>a:colspan</code> and the <code>checkboxLabelsInline</code>
+ * attributes.
+ * </p>
  * <p>
- * This is especially annoying as most JSF web applications typically make heavy
+ * This situation is especially annoying as most JSF web applications typically make heavy
  * use of quite simple grid-like form layouts, but using
  * <code>&lt;panelGrid&gt;</code> or applying HTML tables / CSS explicitly is
  * cumbersome and diminishes XHTML readability, especially when trying to align
@@ -79,6 +86,7 @@ import org.omnifaces.util.State;
  *
                 <h2>Known restrictions</h2>
  * <ul>
+ * <li>Only some basic PrimeFaces components are supported.</li>
  * <li>Nesting <code>&lt;cf:formLayout&gt;</code>s is not supported.</li>
  * <li>Support for custom styling is very limited; explicitly override the
  * default styles is not supported.</li>
@@ -99,7 +107,7 @@ public class FormLayout extends UIPanel {
 
     private enum PropertyKeys {
         // Cannot be uppercased. They have to exactly match the attribute names.
-        groups, groupRatios, styleClass, style;
+        groups, groupRatios, checkboxLabelsInline, styleClass, style;
     }
 
     public FormLayout() {
@@ -120,6 +128,14 @@ public class FormLayout extends UIPanel {
 
     public void setGroupRatios(String columnRatios) {
         state.put(FormLayout.PropertyKeys.groupRatios, columnRatios);
+    }
+
+    public boolean isCheckboxLabelsInline() {
+        return state.get(FormLayout.PropertyKeys.checkboxLabelsInline, true);
+    }
+
+    public void setCheckboxLabelsInline(boolean checkboxLabelsInline) {
+        state.put(FormLayout.PropertyKeys.checkboxLabelsInline, checkboxLabelsInline);
     }
 
     public String getStyleClass() {

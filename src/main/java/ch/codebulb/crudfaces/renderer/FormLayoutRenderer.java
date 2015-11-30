@@ -13,6 +13,7 @@
 package ch.codebulb.crudfaces.renderer;
 
 import ch.codebulb.crudfaces.component.FormLayout;
+import ch.codebulb.crudfaces.component.IncludeMainCss;
 import ch.codebulb.crudfaces.util.ComponentsHelper;
 import ch.codebulb.crudfaces.util.StringsHelper;
 import java.io.IOException;
@@ -23,13 +24,16 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.component.UIMessage;
 import javax.faces.component.UIPanel;
+import javax.faces.component.UISelectBoolean;
 import javax.faces.component.html.HtmlCommandButton;
 import javax.faces.component.html.HtmlCommandLink;
 import javax.faces.component.html.HtmlOutcomeTargetButton;
+import javax.faces.component.html.HtmlOutputLabel;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.render.FacesRenderer;
 import javax.faces.render.Renderer;
+import org.omnifaces.util.Faces;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.expression.SearchExpressionFacade;
 
@@ -59,6 +63,7 @@ public class FormLayoutRenderer extends Renderer {
     
     protected Map<UIComponent, UIMessage> componentsWithAttachedMessages = new HashMap<>();
     protected Map<String, UIComponent> buttons = new LinkedHashMap<>();
+    protected Map<UISelectBoolean, HtmlOutputLabel> checkboxesWithLabels = new LinkedHashMap<>();
 
     @Override
     public boolean getRendersChildren() {
@@ -107,7 +112,7 @@ public class FormLayoutRenderer extends Renderer {
             throw new NullPointerException();
         }
         if (component.getChildCount() > 0) {
-            findMessagesAndButtons(component, context);
+            findSpecialComponents((FormLayout) component, context);
             
             for (UIComponent child : component.getChildren()) {
                 if (shouldRender(child)) {
@@ -115,24 +120,32 @@ public class FormLayoutRenderer extends Renderer {
                 }
             }
             
-            encode(context, (FormLayout) component);
+            encode((FormLayout) component, context);
         }
     }
 
-    private void findMessagesAndButtons(UIComponent component, FacesContext context) {
-        // get message components
-        for (UIComponent child : component.getChildren()) {
-            if (child instanceof UIMessage) {
+    private void findSpecialComponents(FormLayout formLayout, FacesContext context) {
+        for (UIComponent child : formLayout.getChildren()) {
+            if (isMessage(child)) {
                 UIComponent target = SearchExpressionFacade.resolveComponent(context, child, ((UIMessage) child).getFor());
                 componentsWithAttachedMessages.put(target, (UIMessage) child);
             }
             else if(isButton(child)) {
                 buttons.put(child.getClientId(), child);
             }
+            
+            if (formLayout.isCheckboxLabelsInline()) {
+                if(isLabel(child)) {
+                    UIComponent target = SearchExpressionFacade.resolveComponent(context, child, ((HtmlOutputLabel) child).getFor());
+                    if (isCheckbox(target)) {
+                        checkboxesWithLabels.put((UISelectBoolean)target, (HtmlOutputLabel) child);
+                    }
+                }
+            }
         }
     }
     
-    private void encode(FacesContext context, FormLayout formLayout) throws IOException {
+    private void encode(FormLayout formLayout, FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         
         for (FormLayoutModel.Row row : model.getRows()) {
@@ -158,10 +171,10 @@ public class FormLayoutRenderer extends Renderer {
                     UIMessage attachedMessage = componentsWithAttachedMessages.get(component);
 
                     if (attachedMessage == null) {
-                        component.encodeAll(context);
+                        encodeComponent(component, formLayout, context);
                     }
                     else {
-                        encodeCombinedComponentWithMessage(component, attachedMessage, context);
+                        encodeCombinedComponentWithMessage(component, formLayout, attachedMessage, context);
                     }
 
                     // end comp
@@ -193,6 +206,14 @@ public class FormLayoutRenderer extends Renderer {
         return child instanceof UIMessage;
     }
     
+    static boolean isCheckbox(UIComponent child) {
+        return child instanceof UISelectBoolean;
+    }
+    
+    private static boolean isLabel(UIComponent child) {
+        return child instanceof HtmlOutputLabel;
+    }
+    
     static int getColspan(UIComponent child) {
         int ret = ComponentsHelper.getPassThroughAttribute(child, "colspan", Integer.class);
         if (ret == 0) {
@@ -203,7 +224,7 @@ public class FormLayoutRenderer extends Renderer {
         }
     }
 
-    private void encodeCombinedComponentWithMessage(UIComponent child, UIMessage attachedMessage, FacesContext context) throws IOException {
+    private void encodeCombinedComponentWithMessage(UIComponent child, FormLayout formLayout, UIMessage attachedMessage, FacesContext context) throws IOException {
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement("div", null);
         String invalidStyleClass = null;
@@ -212,7 +233,7 @@ public class FormLayoutRenderer extends Renderer {
                     formLayoutProvider.getMessageComponentSubCellStyleClass();
         }
         writer.writeAttribute("class", StringsHelper.join(" ").add(invalidStyleClass).add("cf-formlayout-componentcell").toString(), null);
-        child.encodeAll(context);
+        encodeComponent(child, formLayout, context);
         writer.endElement("div");
 
         writer.startElement("div", null);
@@ -223,6 +244,27 @@ public class FormLayoutRenderer extends Renderer {
         writer.writeAttribute("class", StringsHelper.join(" ").add(invalidStyleClass).add("cf-formlayout-messagecell").toString(), null);
         attachedMessage.encodeAll(context);
         writer.endElement("div");
+    }
+    
+    private void encodeComponent(UIComponent child, FormLayout formLayout, FacesContext context) throws IOException {
+        if (formLayout.isCheckboxLabelsInline()) {
+            if (isCheckbox(child)) {
+                // put checkbox and label in a containing div
+                ResponseWriter writer = context.getResponseWriter();
+                writer.startElement("div", null);
+                child.encodeAll(context);
+                checkboxesWithLabels.get(child).encodeAll(context);
+                writer.endElement("div");
+                return;
+            }
+            else if(isLabel(child)) {
+                // don't render the label separately
+                if (checkboxesWithLabels.values().contains(child)) {
+                    return;
+                }
+            }
+        }
+        child.encodeAll(context);
     }
 
     @Override

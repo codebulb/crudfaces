@@ -46,9 +46,14 @@
     margin-left: 0px;
 }
 
-.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-outputtext {
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-outputtext,
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-checkbox {
     /* align with .control-label cells */
     padding-top: 7px;
+}
+
+.form-horizontal.cf-formlayout > .cf-formlayout-row > .cf-formlayout-group > .cf-formlayout-checkbox > .cf-formlayout-componentcell > div > label {
+    margin-left: 4px;
 }
 
 .cf-formlayout-messagecell > .alert {
@@ -165,6 +170,8 @@
 
 .ui-chkbox-box, .ui-radiobutton-box {
     border: 1px solid #a8a8a8;
+    vertical-align: middle;
+    cursor: pointer;
 }
 
 .ui-icon {

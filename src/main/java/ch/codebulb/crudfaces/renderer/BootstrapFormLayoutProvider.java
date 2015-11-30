@@ -126,6 +126,9 @@ public class BootstrapFormLayoutProvider {
         else if (component instanceof HtmlOutputText) {
             return "cf-formlayout-outputtext";
         }
+        else if (FormLayoutRenderer.isCheckbox(component)) {
+            return "cf-formlayout-checkbox";
+        }
         else {
             return null;
         }
