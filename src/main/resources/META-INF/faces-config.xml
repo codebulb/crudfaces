@@ -52,8 +52,9 @@
 	<managed-bean>
 		<description>
 			<![CDATA[
-				This makes an instance of <code>java.util.Date</code> as current datetime available by
-				<code>#{now}</code>.
+				A wrapper bean to access any (request-scoped) bean as if it were in "flash
+                                scope", thus allowing changes to the bean to survive one redirect without
+                                touching the session at all.
 			]]>
 		</description>
 		<managed-bean-name>flashBeans</managed-bean-name>
@@ -67,23 +68,25 @@
         <managed-bean>
 		<description>
 			<![CDATA[
-				This makes an instance of <code>java.util.Date</code> as current datetime available by
-				<code>#{now}</code>.
+				A helper bean for I18N (localization) String lookup from within EL which
+                                allows accessing localization keys on any registered resource-bundle, not
+                                just a resource-bundle with a given "var" id.
 			]]>
 		</description>
 		<managed-bean-name>I18N</managed-bean-name>
 		<managed-bean-class>ch.codebulb.crudfaces.managedbeans.I18N</managed-bean-class>
 	
-		<managed-bean-scope>none</managed-bean-scope></managed-bean>
+		<managed-bean-scope>none</managed-bean-scope>
+        </managed-bean>
         <managed-bean>
 		<description>
 			<![CDATA[
-				This makes an instance of <code>java.util.Date</code> as current datetime available by
-				<code>#{now}</code>.
+				An <code>I18N</code> variant which does <i>not</i> capitalize the main message.
 			]]>
 		</description>
 		<managed-bean-name>i18n</managed-bean-name>
 		<managed-bean-class>ch.codebulb.crudfaces.managedbeans.I18NNoCaps</managed-bean-class>
 	
-		<managed-bean-scope>none</managed-bean-scope></managed-bean>
+		<managed-bean-scope>none</managed-bean-scope>
+        </managed-bean>
 </faces-config>
