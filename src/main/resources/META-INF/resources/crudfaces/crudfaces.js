@@ -65,8 +65,9 @@ var CrudFaces = {
             $('.ui-state-disabled').addClass('disabled'); // keep ui-state-disabled
             
             // checkboxes
-            $('.ui-chkbox-box:not(ui-state-active)').removeClass('fa').removeClass('fa-check');
-            $('.ui-chkbox-box.ui-state-active').addClass('fa').addClass('fa-check');
+            $('.ui-chkbox-box').removeClass('fa').removeClass('fa-check').removeClass('fa-close');
+            $('.ui-chkbox-box.ui-state-active > span.ui-icon-check').parent().addClass('fa').addClass('fa-check'); // checkbox
+            $('.ui-chkbox-box.ui-state-active > span.ui-icon-closethick').parent().addClass('fa').addClass('fa-close'); // PrimeFaces extensions tri-state checkbox
             
             // radiobuttons
             $('.ui-radiobutton-box:not(ui-state-active)').removeClass('fa').removeClass('fa-circle');
