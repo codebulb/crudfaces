@@ -85,12 +85,16 @@ public class ReadOnly extends ComponentHandler {
                 ReadOnlyOutputText outputText = new ReadOnlyOutputText();
                 Object value = ComponentsHelper.getAttribute(child, "value", String.class);
                 
+                if (value == null) {
+                    outputText.setValue(null);
+                }
                 // boolean checkboxes
-                if (value instanceof Boolean) {
+                else if (value instanceof Boolean) {
                     outputText.setValue(FacesHelper.i18nNoCaps(value.toString()));
                 }
                 else {
-                    outputText.setValue(value);
+                    // explicit toString() is required for Enum values
+                    outputText.setValue(value.toString());
                 }
                 
                 outputText.setId(child.getId());
