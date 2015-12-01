@@ -100,8 +100,9 @@ import org.omnifaces.util.State;
  */
 @FacesComponent(FormLayout.COMPONENT_TYPE)
 public class FormLayout extends UIPanel {
-
     public static final String COMPONENT_TYPE = "ch.codebulb.crudfaces.component.FormLayout";
+    
+    public static boolean CHECKBOX_LABELS_INLINE = true;
 
     private final State state = new State(getStateHelper());
 
@@ -131,7 +132,7 @@ public class FormLayout extends UIPanel {
     }
 
     public boolean isCheckboxLabelsInline() {
-        return state.get(FormLayout.PropertyKeys.checkboxLabelsInline, true);
+        return state.get(FormLayout.PropertyKeys.checkboxLabelsInline, CHECKBOX_LABELS_INLINE);
     }
 
     public void setCheckboxLabelsInline(boolean checkboxLabelsInline) {
