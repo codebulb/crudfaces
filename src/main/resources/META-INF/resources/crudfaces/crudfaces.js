@@ -73,11 +73,16 @@ var CrudFaces = {
             $('.ui-radiobutton-box:not(ui-state-active)').removeClass('fa').removeClass('fa-circle');
             $('.ui-radiobutton-box.ui-state-active').addClass('fa').addClass('fa-circle');
             
+            // selectOneMenu
+            $('.ui-selectonemenu-list').addClass('dropdown-menu');
+            $('label.ui-selectonemenu-label').removeClass('ui-corner-all').removeClass('form-control');
+            $('.ui-selectonemenu').addClass('btn').addClass('btn-default').addClass('dropdown-toggle').addClass('form-control');
+            
             // table selection column header
             $('.ui-selection-column').addClass('text-center');
             
             // form: form-control-static
-            $(".cf-formlayout-componentcell:has(span)").addClass('form-control-static');
+            $(".cf-formlayout-componentcell:has(span:not('.ui-icon'))").addClass('form-control-static');
             
             // dataTable paginator
             $('.ui-paginator > .ui-paginator-first > .ui-icon-seek-first').addClass('fa').addClass('fa-angle-double-left')
