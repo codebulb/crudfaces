@@ -163,7 +163,7 @@ public class FormLayoutRenderer extends Renderer {
                     
                     writer.startElement("div", null);
 
-                    String cellStyleClass = formLayoutProvider.createUnits(comp.getOriginalRatio(), comp.getRatio()).getStyleClasses();
+                    String cellStyleClass = formLayoutProvider.createUnits(comp.getSingleGroupRatio(), comp.getRatio()).getStyleClasses();
 
                     writer.writeAttribute("class", StringsHelper.join(" ").
                             add(cellStyleClass).add("cf-formlayout-cell").add(formLayoutProvider.getComponentClass(component)).toString(), null);

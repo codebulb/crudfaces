@@ -76,15 +76,16 @@ public class FormLayoutModel {
             rows.add(new Row());
         }
         
-        int originalGroupColRatio = groupRatios[currentGroupCol];
+        int singleGroupRatio = 0;
         // with colspan: "devour" neighbor cells
         for (int i = 0; i < colspan; i++) {
             int currentGroupColRatio = groupRatios[currentGroupCol];
             currentColspan += currentGroupColRatio;
+            singleGroupRatio = (singleGroupRatio + currentGroupColRatio) % getGroupRatioSum();
             // mark the current position in the groupRatios array
             currentGroupCol = (currentGroupCol + 1) % groupRatios.length;
         }
-        currentComps.add(new Comp(component, currentColspan, originalGroupColRatio));
+        currentComps.add(new Comp(component, currentColspan, singleGroupRatio));
         currentColspan = 0;
         
         // end of the groupRatios array is reached: Close current group
@@ -93,6 +94,14 @@ public class FormLayoutModel {
             rows.get(rows.size()-1).getGroups().add(new Group(currentComps));
             currentComps = new ArrayList<>();
         }
+    }
+    
+    private int getGroupRatioSum() {
+        int ret = 0;
+            for (int ratio : groupRatios) {
+                ret += ratio;
+            }
+            return ret;
     }
 
     public List<Row> getRows() {
@@ -129,7 +138,7 @@ public class FormLayoutModel {
             // if group length == row length, always use the actual ratio
             if (getRatio() == 1) {
                 for (Comp comp : comps) {
-                    comp.setOriginalRatio(comp.getRatio());
+                    comp.setSingleGroupRatio(comp.getRatio());
                 }
             }
         }
@@ -165,19 +174,19 @@ public class FormLayoutModel {
     public class Comp {
         public final UIComponent component;
         private final int colspan;
-        private int originalRatio;
+        private int singleGroupRatio;
         private Group group;
 
         /**
          * @param component the component
          * @param colspanRatio the ratio with colspan applied
-         * @param originalRatio the original ratio without colspan applied.
+         * @param singleGroupRatio the original ratio without colspan applied.
          * for small responsive layouts, the original ratio may be used instead
          */
-        public Comp(UIComponent component, int colspanRatio, int originalRatio) {
+        public Comp(UIComponent component, int colspanRatio, int singleGroupRatio) {
             this.component = component;
             this.colspan = colspanRatio;
-            this.originalRatio = originalRatio;
+            this.singleGroupRatio = singleGroupRatio;
         }
         
         /**
@@ -191,12 +200,12 @@ public class FormLayoutModel {
             return colspan / group.getRatio();
         }
 
-        public int getOriginalRatio() {
-            return originalRatio;
+        public int getSingleGroupRatio() {
+            return singleGroupRatio;
         }
 
-        public void setOriginalRatio(int originalRatio) {
-            this.originalRatio = originalRatio;
+        public void setSingleGroupRatio(int originalRatio) {
+            this.singleGroupRatio = originalRatio;
         }
     }
 }

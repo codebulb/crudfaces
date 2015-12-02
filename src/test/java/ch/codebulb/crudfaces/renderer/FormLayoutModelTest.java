@@ -164,6 +164,25 @@ public class FormLayoutModelTest {
         assertOriginalRatiosEqual(model.getRows().get(1).getGroups().get(0), 4, 6, 2);
     }
     
+    @Test
+    public void testTwoGroupsOverflowingColspanUntilEndOfRow() {
+        // group 1-2
+        model.add(componentWithColspan(1));
+        model.add(componentWithColspan(5));
+        // group 3
+        model.add(componentWithColspan(1));
+        model.add(componentWithColspan(1));
+        model.add(componentWithColspan(1));
+        
+        assertEquals(2, model.getRows().size());
+        assertRatiosEqual(model.getRows().get(0).getGroups(), 2);
+        assertRatiosEqual(model.getRows().get(0).getGroups().get(0), 2, 10);
+        assertOriginalRatiosEqual(model.getRows().get(0).getGroups().get(0), 4, 8);
+        assertRatiosEqual(model.getRows().get(1).getGroups(), 1);
+        assertRatiosEqual(model.getRows().get(1).getGroups().get(0), 4, 6, 2);
+        assertOriginalRatiosEqual(model.getRows().get(1).getGroups().get(0), 4, 6, 2);
+    }
+    
     private static void assertRatiosEqual(List<Group> actualGroups, int... expectedRatios) {
         assertEquals(expectedRatios.length, actualGroups.size());
         for (int i = 0; i < expectedRatios.length; i++) {
@@ -187,7 +206,7 @@ public class FormLayoutModelTest {
         assertEquals(expectedRatios.length, actualGroup.getComps().size());
         int sum = 0;
         for (int i = 0; i < expectedRatios.length; i++) {
-            int ratio = (int)actualGroup.getComps().get(i).getOriginalRatio();
+            int ratio = (int)actualGroup.getComps().get(i).getSingleGroupRatio();
             assertEquals(expectedRatios[i], ratio);
             sum += ratio;
         }
