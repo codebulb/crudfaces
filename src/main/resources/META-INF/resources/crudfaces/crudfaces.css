@@ -259,6 +259,16 @@
     width: 100%;
 }
 
+/* copied from Font Awesome .fa-check selector */
+.ui-icon-check::before {
+    content: "\f00c";
+}
+
+/* copied from Font Awesome .fa-close selector */
+.ui-icon-closethick::before {
+    content: "\f00d";
+}
+
 /*** Font Awesome fixes ***/
 /*** ================== ***/
 .fa.fa-circle.ui-radiobutton-box {
