@@ -255,7 +255,7 @@
     cursor: not-allowed !important;
 }
 
-.ui-selectonemenu, .dropdown-menu {
+.form-horizontal .ui-selectonemenu {
     width: 100%;
 }
 
