@@ -65,7 +65,7 @@ var CrudFaces = {
             $('.ui-state-disabled').addClass('disabled'); // keep ui-state-disabled
             
             // checkboxes
-            $('.ui-chkbox-box').addClass('fa');
+            $('.ui-chkbox-box').addClass('fa').addClass('form-control');
             $('.ui-chkbox-icon').removeClass('ui-icon').removeClass('ui-c')
             
             // radiobuttons
