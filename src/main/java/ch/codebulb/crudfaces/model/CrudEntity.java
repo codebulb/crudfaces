@@ -41,9 +41,17 @@ import ch.codebulb.crudfaces.controller.CrudController;;
 &#064;Entity
 public class Customer extends CrudEntity {
     &#064;NotNull
+    &#064;Pattern(regexp = &quot;[^0-9]*&quot;, message = &quot;{validation.model.customer.name}&quot;)
     private String firstName;
     &#064;NotNull
+    &#064;Pattern(regexp = &quot;[^0-9]*&quot;, message = &quot;{validation.model.customer.name}&quot;)
     private String lastName;
+    &#064;MaxSize(100)
+    private String comment;
+    private boolean premium;
+    &#064;Enumerated(EnumType.STRING)
+    &#064;NotNull
+    private Language mainLanguage;
 
     public String getFirstName() {
         return firstName;
@@ -59,6 +67,30 @@ public class Customer extends CrudEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
+    }
+
+    public Language getMainLanguage() {
+        return mainLanguage;
+    }
+
+    public void setMainLanguage(Language mainLanguage) {
+        this.mainLanguage = mainLanguage;
     }
 }
 </pre>

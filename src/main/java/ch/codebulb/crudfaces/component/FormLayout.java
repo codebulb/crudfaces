@@ -83,6 +83,44 @@ import org.omnifaces.util.State;
  * Note that <code>&lt;cf:formLayout&gt;</code> does not implement an actual
  * HTML <code>&lt;form&gt;</code>, it's really just for layouting purposes which
  * leaves you the free choice of how to integrate it in an actual HTML form.</p>
+ * 
+ * <h2>Global overrides</h2>
+ * <p>
+ * The <code>FormLayout</code> class provides the following hooks to override
+ * its default configuration globally:</p>
+ * <ul>
+ * <li><code>#CHECKBOX_LABELS_INLINE</code>: The default value for the
+ * <code>checkboxLabelsInline</code> attribute. <i>Defaults to
+ * <code>true</code>.</i></li>
+ * </ul>
+ * <p>
+ * The <code>FormLayoutRenderer</code> class provides the following hooks to
+ * override its default configuration globally:</p>
+ * <ul>
+ * <li><code>#MESSAGE_COMPONENT_SUBCELL_STYLE_CLASS</code>: The style class
+ * applied to the <code>&lt;div&gt;</code> container of an invalid component
+ * with a <code>&lt;message&gt;</code> attached. <i>Defaults to
+ * <code>BootstrapFormLayoutProvider#getMessageComponentSubCellStyleClass()</code>.</i></li>
+ * <li><code>#MESSAGE_SUBCELL_STYLE_CLASS</code>: The style class applied to the
+ * <code>&lt;div&gt;</code> container of a <code>&lt;message&gt;</code>.
+ * <i>Defaults to
+ * <code>BootstrapFormLayoutProvider#getMessageSubCellStyleClass()</code>.</i></li>
+ * </ul>
+ * <p>
+ * You can use e.g. an eagerly loaded application scoped bean to apply a global
+ * configuration override:</p>
+<pre class="brush:java">
+&#064;Eager
+&#064;ApplicationScoped
+public class GlobalApplicationConfig {
+    &#064;PostConstruct
+    public void overrideCrudFacesConfig() {
+        FormLayout.CHECKBOX_LABELS_INLINE = false;
+        FormLayoutRenderer.MESSAGE_COMPONENT_SUBCELL_STYLE_CLASS = &quot;col-lg-12&quot;;
+        FormLayoutRenderer.MESSAGE_SUBCELL_STYLE_CLASS = &quot;col-lg-12&quot;;
+    }
+}
+</pre>
  *
                 <h2>Known restrictions</h2>
  * <ul>

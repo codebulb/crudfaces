@@ -89,7 +89,21 @@ import org.primefaces.component.ajaxstatus.AjaxStatus;
  * 
  * <p>Also make sure that you don't override CrudFaces' default web.xml <code>&lt;context-param&gt;</code>
  * <code>primefaces.THEME</code> = <code>none</code></p>
- *
+ * <p>
+ * A few notes on specific components:</p>
+ * <ul>
+ * <li><code>&lt;commandButton&gt;</code> does not support inner HTML like it is
+ * typically used with Bootstrap to e.g. embed a button’s image. Thus, use
+ * <code>&lt;commandLink&gt;</code> instead which fully supports inner HTML
+ * whilst otherwise being equivalent to
+ * <code>&lt;commandButton&gt;</code>. The same applies to
+ * <code>&lt;button&gt;</code> / <code>&lt;link&gt;</code>.</li>
+ * <li><code>&lt;selectOneMenu&gt;</code>: Define your own stylesheet for the
+ * <code>.form-horizontal .ui-selectonemenu { }</code> selector to choose
+ * between <code>width = 100%;</code> (component fills its containing cell;
+ * CrudFaces and Bootstrap default) or <code>width = auto;</code> (component’s
+ * width is defined by the label text length; PrimeFaces default).</li>
+ * </ul>
  * <h2>Known restrictions</h2>
  * <ul>
  * <li>Only basic PrimeFaces components are supported.</li>
