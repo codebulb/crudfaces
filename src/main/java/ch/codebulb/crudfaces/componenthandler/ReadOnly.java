@@ -15,8 +15,12 @@ package ch.codebulb.crudfaces.componenthandler;
 import ch.codebulb.crudfaces.component.ReadOnlyOutputText;
 import ch.codebulb.crudfaces.util.ComponentsHelper;
 import ch.codebulb.crudfaces.util.FacesHelper;
+import ch.codebulb.crudfaces.util.StringsHelper;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -25,6 +29,7 @@ import javax.faces.view.facelets.ComponentHandler;
 import javax.faces.view.facelets.FaceletContext;
 import javax.faces.view.facelets.TagAttribute;
 import org.omnifaces.util.Faces;
+import org.primefaces.component.calendar.Calendar;
 
 /**
  * The componenthandler for the {@link ch.codebulb.crudfaces.component.ReadOnly} component.
@@ -87,6 +92,10 @@ public class ReadOnly extends ComponentHandler {
                 
                 if (value == null) {
                     outputText.setValue(null);
+                }
+                // date calendar
+                else if (child instanceof Calendar) {
+                    outputText.setValue(StringsHelper.formatDate((Date) value));
                 }
                 // boolean checkboxes
                 else if (value instanceof Boolean) {
