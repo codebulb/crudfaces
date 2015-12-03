@@ -124,7 +124,7 @@ public class GlobalApplicationConfig {
  *
                 <h2>Known restrictions</h2>
  * <ul>
- * <li>Only some basic PrimeFaces components are supported.</li>
+ * <li>Only basic PrimeFaces components are supported.</li>
  * <li>Nesting <code>&lt;cf:formLayout&gt;</code>s is not supported.</li>
  * <li>Support for custom styling is very limited; explicitly override the
  * default styles is not supported.</li>
