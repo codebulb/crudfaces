@@ -12,7 +12,10 @@
  */
 package ch.codebulb.crudfaces.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,5 +79,21 @@ public class StringsHelper {
         public String toString() {
             return join(strings, separator);
         }
+    }
+    
+    /**
+     * Formats the date provided using the webapplication's defaul date format pattern as defined by the resource-bundle key
+     * <code>format.calendar</code>. This is the most DRY-compliant way to reuse the same date format over the entire application.<p/>
+     * 
+     * You can also use it directly in a Facelets XHTML page like this, using OmniFaces' <code>&lt;o:importFunctions&gt;</code>:<p/>
+<pre class="brush:xml">
+&lt;o:importFunctions type=&quot;ch.codebulb.crudfaces.util.StringsHelper&quot; var=&quot;strings&quot; /&gt;
+...
+&lt;h:outputText value=&quot;#{strings:formatDate(myAttribute)}&quot;/&gt;
+</pre>
+     */
+    public static String formatDate(Date input) {
+        DateFormat dateFormat = new SimpleDateFormat(FacesHelper.i18nOrNullNoCaps("format.calendar"));
+        return dateFormat.format(input);
     }
 }
