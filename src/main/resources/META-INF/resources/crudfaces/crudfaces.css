@@ -280,6 +280,70 @@
     content: "\f00d";
 }
 
+.ui-calendar {
+    display: inline-flex;
+}
+
+.form-horizontal .form-control.hasDatepicker {
+    width: auto;
+}
+
+button.ui-datepicker-trigger {
+    margin: 0;
+    padding-left: 10px;
+}
+
+/* copied from Bootstrap panel / panel-default selectors */
+#ui-datepicker-div {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+#ui-datepicker-div {
+    padding-right: 12px;
+}
+
+.ui-datepicker-header {
+    margin-right: -18px;
+}
+
+.ui-datepicker-prev:before {
+    content: "\00ab";
+    margin-left: 8px;
+    width: 10px;
+    cursor: pointer;
+}
+
+.ui-datepicker-next:before {
+    content: "\00bb";
+    margin-right: -8px;
+    width: 10px;
+    cursor: pointer;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  cursor: pointer;
+}
+
+.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover {
+    top: 2px;
+}
+
+.ui-datepicker .ui-datepicker-prev-hover {
+    left: 2px;
+}
+
+.ui-datepicker .ui-datepicker-next-hover {
+    right: 2px;
+}
+
+.ui-datepicker-header a {
+    text-decoration: none;
+}
+
 /*** Font Awesome fixes ***/
 /*** ================== ***/
 .fa.fa-circle.ui-radiobutton-box {

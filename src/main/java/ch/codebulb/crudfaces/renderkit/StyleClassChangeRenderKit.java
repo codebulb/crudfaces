@@ -173,13 +173,15 @@ public class StyleClassChangeRenderKit extends RenderKitWrapper {
         public void endElement(String name) throws IOException {
             if ("body".equals(name)) {
                 AjaxStatus status = (AjaxStatus) Faces.getContext().getApplication().createComponent(AjaxStatus.COMPONENT_TYPE);
-                status.setOncomplete("CrudFaces.styleClassChanges.changePrimeFacesToBootstrap();");
+                // need to wait for "on document ready" e.g. for .ui-button.ui-datepicker-trigger
+                status.setOncomplete("$(document).ready(function() {CrudFaces.styleClassChanges.changePrimeFacesToBootstrap();});");
                 status.encodeAll(Faces.getContext());
                 
                 ResponseWriter writer = Faces.getContext().getResponseWriter();
 		writer.startElement("script", null);
 		writer.writeAttribute("type", "text/javascript", "type");
-                writer.writeText("CrudFaces.styleClassChanges.changePrimeFacesToBootstrap();CrudFaces.styleClassChanges.initChangePrimeFacesToBootstrap()", null);
+                // need to wait for "on document ready" e.g. for .ui-button.ui-datepicker-trigger
+                writer.writeText("$(document).ready(function() {CrudFaces.styleClassChanges.changePrimeFacesToBootstrap();});CrudFaces.styleClassChanges.initChangePrimeFacesToBootstrap()", null);
                 writer.endElement("script");
             }
             super.endElement(name);
