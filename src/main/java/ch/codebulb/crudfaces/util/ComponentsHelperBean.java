@@ -30,7 +30,7 @@ public class ComponentsHelperBean {
      * when {@code pe:triStateCheckbox} is used as the filter component.<p/>
      * 
      * Use it like this:<p/>
-<pre class="brush:java">
+<pre class="brush:xml">
 &lt;p:column headerText=&quot;#{I18N['label']}&quot; sortBy=&quot;#{item.attribute}&quot; filterBy=&quot;#{item.attribute}&quot;
           filterFunction=&quot;#{componentsHelper.filterBoolean}&quot; style=&quot;width: 180px;&quot;&gt;
     &lt;f:facet name=&quot;filter&quot;&gt;
