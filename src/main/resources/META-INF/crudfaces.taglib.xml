@@ -90,6 +90,10 @@ Note that <code>&lt;cf:formLayout&gt;</code> does not implement an actual
 HTML <code>&lt;form&gt;</code>, it's really just for layouting purposes which
 leaves you the free choice of how to integrate it in an actual HTML form.</p>
 
+<h2>Usage</h2>
+<p>Add the CrudFaces Facelets library declaration <code>xmlns:cf=&quot;http://crudfaces.codebulb.ch&quot;</code>
+and use the <code>&lt;cf:formLayout&gt;</code> component as shown in the demo showcase.</p>
+
 <h2>Supported HTML5 pass-through attributes for direct child
 components</h2>
 <p>Declare the <code>xmlns:a="http://xmlns.jcp.org/jsf/passthrough"</code>
@@ -112,10 +116,17 @@ the number of columns provided whilst keeping the layout responsive.
 
 <h2>Known restrictions</h2>
 <ul>
-<li>Only some basic PrimeFaces components are supported.</li>
+<li>Only basic PrimeFaces components are supported.</li>
 <li>Nesting <code>&lt;cf:formLayout&gt;</code>s is not supported.</li>
 <li>Support for custom styling is very limited; explicitly override the
 default styles is not supported.</li>
+<li>A "component group" must always be completed; incomplete groups are not
+rendered. For instance, when working with a <code>&lt;cf:formLayout
+groupRatios="4 6 2"&gt;</code>, which has 3 components per group (e.g. a
+label, an input component, and a help button), and you put only 2
+components in the last group (e.g. a label and an input component),
+this group will not be rendered. This applies to <code>a:colspan</code> usage as
+well.</li>
 </ul>
 <p>
 These restrictions are most likely to be addressed and resolved in future
@@ -210,8 +221,10 @@ set for the original input component, it can still be targetted by e.g. an
 <code>&lt;message&gt;</code>, or a <code>&lt;p:focus&gt;</code> component,
 hence preventing "target not found" errors.</p>
 <h2>Usage</h2>
+<p>Add the CrudFaces Facelets library declaration <code>xmlns:cf=&quot;http://crudfaces.codebulb.ch&quot;</code>
+and use the <code>&lt;cf:readOnly&gt;</code> component as shown in the demo showcase.</p>
 <p>
-Using the tag is somewhat similar to OmniFaces'
+Using the tag is quite similar to OmniFaces'
 <code>&lt;o:massAttribute&gt;</code> tag: Just surround the component(s) in
 question with the tag. Of course, you can switch between input and output
 rendering conditionally using the component's <code>disabled</code>
@@ -219,7 +232,7 @@ attribute.</p>
 
 <h2>Known restrictions</h2>
 <ul>
-<li>Only some basic PrimeFaces components are supported.</li>
+<li>Only basic PrimeFaces components are supported.</li>
 </ul>
 <p>
 These restrictions are most likely to be addressed and resolved in future

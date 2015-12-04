@@ -84,6 +84,12 @@ import org.omnifaces.util.State;
  * HTML <code>&lt;form&gt;</code>, it's really just for layouting purposes which
  * leaves you the free choice of how to integrate it in an actual HTML form.</p>
  * 
+ * <h2>Usage</h2>
+ * <p>
+ * Add the CrudFaces Facelets library declaration
+ * <code>xmlns:cf=&quot;http://crudfaces.codebulb.ch&quot;</code> and use the
+ * <code>&lt;cf:formLayout&gt;</code> component as shown in the demo showcase.</p>
+ * 
  * <h2>Global overrides</h2>
  * <p>
  * The <code>FormLayout</code> class provides the following hooks to override
@@ -128,6 +134,12 @@ public class GlobalApplicationConfig {
  * <li>Nesting <code>&lt;cf:formLayout&gt;</code>s is not supported.</li>
  * <li>Support for custom styling is very limited; explicitly override the
  * default styles is not supported.</li>
+ * <li>A "component group" must always be completed; incomplete groups are not
+ * rendered. For instance, when working with a <code>&lt;cf:formLayout
+ * groupRatios="4 6 2"&gt;</code>, which has 3 components per group (e.g. a
+ * label, an input component, and a help button), and you put only 2 components
+ * in the last group (e.g. a label and an input component), this group will not
+ * be rendered. This applies to <code>a:colspan</code> usage as well.</li>
  * </ul>
  * <p>
  * These restrictions are most likely to be addressed and resolved in future

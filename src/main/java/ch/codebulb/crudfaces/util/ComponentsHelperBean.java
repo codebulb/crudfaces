@@ -27,7 +27,7 @@ public class ComponentsHelperBean {
     
     /**
      * A helper method to be used as a backing bean action for a {@code <p:dataTable>} {@code <p:column>} {@code filterFunction}
-     * when {@code pe:triStateCheckbox} is used as the filter component.<p/>
+     * when {@code <pe:triStateCheckbox>} is used as the filter component.<p/>
      * 
      * Use it like this:<p/>
 <pre class="brush:xml">

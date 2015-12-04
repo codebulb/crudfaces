@@ -39,7 +39,11 @@ import javax.faces.component.UIComponentBase;
  * hence preventing "target not found" errors.</p>
  * <h2>Usage</h2>
  * <p>
- * Using the tag is somewhat similar to OmniFaces'
+ * Add the CrudFaces Facelets library declaration
+ * <code>xmlns:cf=&quot;http://crudfaces.codebulb.ch&quot;</code> and use the
+ * <code>&lt;cf:readOnly&gt;</code> component as shown in the demo showcase.</p>
+ * <p>
+ * Using the tag is quite similar to OmniFaces'
  * <code>&lt;o:massAttribute&gt;</code> tag: Just surround the component(s) in
  * question with the tag. Of course, you can switch between input and output
  * rendering conditionally using the component's <code>disabled</code>

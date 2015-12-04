@@ -89,6 +89,16 @@ import org.primefaces.component.ajaxstatus.AjaxStatus;
  * 
  * <p>Also make sure that you don't override CrudFaces' default web.xml <code>&lt;context-param&gt;</code>
  * <code>primefaces.THEME</code> = <code>none</code></p>
+ * <p><b>Note:</b> You need to manually include Bootstrap and Font Awesome CSS / JavaScript files in your
+ * XHTML pages, preferably in your Facelets template:</p>
+ * <pre class="brush:xml">
+&lt;h:outputStylesheet library=&quot;css&quot; name=&quot;bootstrap.min.css&quot;/&gt;
+&lt;h:outputStylesheet name=&quot;css/font-awesome.min.css&quot; /&gt;
+&lt;h:outputScript library=&quot;js&quot; name=&quot;bootstrap.min.js&quot; /&gt;
+</pre>
+ * <p>
+ * Bootstrap / Font Awesome files are <i>not</i> shipped as part of
+ * CrudFaces.</p>
  * <p>
  * A few notes on specific components:</p>
  * <ul>
@@ -113,7 +123,7 @@ import org.primefaces.component.ajaxstatus.AjaxStatus;
  * </ul>
  * <ul>
  * <li>DOM manipulations which re-introduce PrimeFaces components but which
- * aren't triggered by an onclick() event cannot be caught; however, there is no
+ * aren't triggered by an <code>onclick()</code> event cannot be caught; however, there is no
  * known case where this is a problem.</li>
  * </ul>
  * <p>
