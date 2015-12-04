@@ -9,6 +9,7 @@ Find out more about this project:
 * [VDL doc](http://codebulb.github.io/pages/crudfaces/vdldoc/)
 
 ## How to use it
+### Library dependency
 Use [JitPack](https://jitpack.io/) to add its dependency to your Maven project:
 ```
 <dependency>
@@ -25,3 +26,6 @@ Use [JitPack](https://jitpack.io/) to add its dependency to your Maven project:
 Replace the version by the tag / commit hash of your choice or `-SNAPSHOT` to get the newest SNAPSHOT.
 
 Visit [JitPack’s docs](https://jitpack.io/docs/) for more information.
+
+### Components
+Add the CrudFaces Facelets library declaration `xmlns:cf="http://crudfaces.codebulb.ch"` in order to use its UI components in XHTML Facelets pages.
