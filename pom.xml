@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ch.codebulb.crudfaces</groupId>
     <artifactId>CrudFaces</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2_RC-1</version>
     <packaging>jar</packaging>
     
     <build>

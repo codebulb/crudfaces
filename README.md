@@ -15,7 +15,7 @@ Use [JitPack](https://jitpack.io/) to add its dependency to your Maven project:
 <dependency>
     <groupId>com.github.codebulb</groupId>
     <artifactId>crudfaces</artifactId>
-    <version>0.1</version>
+    <version>0.2_RC-1</version>
 </dependency>
 ...
 <repository>
