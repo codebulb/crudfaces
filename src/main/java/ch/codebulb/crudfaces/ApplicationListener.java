@@ -39,7 +39,7 @@ public class ApplicationListener extends DefaultServletContextListener {
     
     // TODO Don't use hard-coded version
     private void logVersion() {
-        LOGGER.log(Level.INFO, "Using CrudFaces version {0}", "0.2-RC1");
+        LOGGER.log(Level.INFO, "Using CrudFaces version {0}", "0.2");
     }
     
     private void initOmniFacesMessagesResolver() {
